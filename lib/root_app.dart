@@ -82,7 +82,7 @@ class GraphQLWidgetScreen extends StatelessWidget {
     final client = ValueNotifier<GraphQLClient>(
       GraphQLClient(
         cache: GraphQLCache(),
-        link: link,
+        link: httpLink,
       ),
     );
 
