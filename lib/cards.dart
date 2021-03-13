@@ -452,7 +452,12 @@ class _ProfileCardState extends State<ProfileCard> {
 
   double getDescriptionSize() {
     double width = MediaQuery.of(context).size.width;
-    return width > 500 ? 18 : 12.0.sp;
+    return width > 500 ? 18 : 8.0.sp;
+  }
+
+  int getMaxLines() {
+    double height = MediaQuery.of(context).size.height;
+    return height > 600 ? 6 : 4;
   }
 
   Widget _buildProfileSynopsis() {
@@ -497,6 +502,8 @@ class _ProfileCardState extends State<ProfileCard> {
                       color: Colors.white,
                       fontSize: getDescriptionSize(),
                     ),
+                    maxLines: getMaxLines(),
+                    overflow: TextOverflow.ellipsis,
                   )
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:daku/models/post.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MatchEngine extends ChangeNotifier {
   final List<Match> _matches;
@@ -31,11 +32,19 @@ class Match extends ChangeNotifier {
   final Post post;
   Decision decision = Decision.indecided;
 
-  Match({this.post});
+  Match({
+    this.post,
+  });
+
+  void launchURL(_url) async {
+    final url = 'https://www.producthunt.com/posts/$_url';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
 
   void like() {
     if (decision == Decision.indecided) {
       decision = Decision.like;
+      launchURL(post.node.slug);
       notifyListeners();
     }
   }

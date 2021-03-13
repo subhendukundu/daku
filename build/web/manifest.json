@@ -1,11 +1,11 @@
 {
-    "name": "daku",
-    "short_name": "daku",
+    "name": "Daku - A Tinder for Products",
+    "short_name": "Daku",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "daku.app is a website to find new products.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
