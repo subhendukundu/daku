@@ -21,7 +21,9 @@ class _CustomDialogState extends State<CustomDialog> {
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoId,
       params: YoutubePlayerParams(
-        startAt: Duration(seconds: 30),
+        startAt: Duration(
+          seconds: 0,
+        ),
         showControls: true,
         showFullscreenButton: true,
       ),

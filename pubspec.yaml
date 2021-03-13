@@ -19,7 +19,6 @@ dependencies:
   graphql_flutter:
   rive: ^0.6.8
   url_strategy: ^0.2.0
-  sizer: ^1.1.8
   google_fonts:
   url_launcher:
 

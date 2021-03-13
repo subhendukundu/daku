@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:daku/models/post.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttery_dart2/layout.dart';
-import 'package:sizer/sizer.dart';
 import './photos.dart';
 import './matches.dart';
 
@@ -349,7 +348,7 @@ class _DraggableCardState extends State<DraggableCard>
     final dragVector = cardOffset / cardOffset.distance;
     final isInLeftRegion = (cardOffset.dx / context.size.width) < -0.45;
     final isInRightRegion = (cardOffset.dx / context.size.width) > 0.45;
-    final isInTopRegion = (cardOffset.dy / context.size.height) < -0.40;
+    // final isInTopRegion = (cardOffset.dy / context.size.height) < -0.40;
 
     setState(() {
       if (isInLeftRegion || isInRightRegion) {
@@ -360,13 +359,14 @@ class _DraggableCardState extends State<DraggableCard>
 
         slideOutDirection =
             isInLeftRegion ? SlideDirection.left : SlideDirection.right;
-      } else if (isInTopRegion) {
+      } /*  else if (isInTopRegion) {
         slideOutTween = new Tween(
             begin: cardOffset, end: dragVector * (2 * context.size.height));
         slideOutAnimation.forward(from: 0.0);
 
         slideOutDirection = SlideDirection.up;
-      } else {
+      } */
+      else {
         slideBackStart = cardOffset;
         slideBackAnimation.forward(from: 0.0);
       }
@@ -447,12 +447,12 @@ class _ProfileCardState extends State<ProfileCard> {
 
   double getTitleSize() {
     double width = MediaQuery.of(context).size.width;
-    return width > 500 ? 24 : 12.0.sp;
+    return width > 500 ? 24 : 18;
   }
 
   double getDescriptionSize() {
     double width = MediaQuery.of(context).size.width;
-    return width > 500 ? 18 : 8.0.sp;
+    return width > 500 ? 18 : 12;
   }
 
   int getMaxLines() {

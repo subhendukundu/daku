@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'configs/constants.dart';
 import 'matches.dart';
 import 'cards.dart';
@@ -16,28 +15,16 @@ class RootPage extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      //return LayoutBuilder
-      builder: (context, constraints) {
-        return OrientationBuilder(
-          //return OrientationBuilder
-          builder: (context, orientation) {
-            //initialize SizerUtil()
-            SizerUtil().init(constraints, orientation); //initialize SizerUtil
-            return MaterialApp(
-              title: 'Daku, A Tinder for Products',
-              theme: ThemeData(
-                primaryColorBrightness: Brightness.light,
-                primarySwatch: Colors.blue,
-                textTheme: GoogleFonts.latoTextTheme(
-                  Theme.of(context).textTheme,
-                ),
-              ),
-              home: GraphQLWidgetScreen(),
-            );
-          },
-        );
-      },
+    return MaterialApp(
+      title: 'Daku, A Tinder for Products',
+      theme: ThemeData(
+        primaryColorBrightness: Brightness.light,
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.latoTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
+      home: GraphQLWidgetScreen(),
     );
   }
 }
@@ -82,7 +69,7 @@ class GraphQLWidgetScreen extends StatelessWidget {
     final client = ValueNotifier<GraphQLClient>(
       GraphQLClient(
         cache: GraphQLCache(),
-        link: httpLink,
+        link: link,
       ),
     );
 
@@ -229,7 +216,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: _buildAppBar(),
       body: Center(
         child: Container(
-          constraints: BoxConstraints(minWidth: 300, maxWidth: 500),
+          constraints: BoxConstraints(
+            minWidth: 300,
+            maxWidth: 500,
+            maxHeight: 730,
+          ),
           padding: EdgeInsets.all(10),
           child: new CardStack(
             matchEngine: matchEngine,

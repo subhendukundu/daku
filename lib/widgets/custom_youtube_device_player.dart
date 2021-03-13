@@ -23,7 +23,7 @@ class _CustomYoutubeDevicePlayerState extends State<CustomYoutubeDevicePlayer> {
       initialVideoId: widget.videoId,
       flags: YoutubePlayerFlags(
         autoPlay: false,
-        mute: true,
+        mute: false,
       ),
     );
   }
