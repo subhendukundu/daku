@@ -1,0 +1,35 @@
+name: daku
+description: A tinder for Products
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  fluttery_dart2: ^0.0.9
+  youtube_explode_dart:
+  youtube_player_flutter: ^7.0.0+7
+  youtube_player_iframe: ^1.2.0+2
+  graphql_flutter:
+  rive: ^0.6.8
+  url_strategy: ^0.2.0
+  sizer: ^1.1.8
+  google_fonts:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  rename:
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/riv/
