@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:swipable_stack/swipable_stack.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'configs/constants.dart';
-import 'matches.dart';
-import 'cards.dart';
 import 'models/post.dart';
 import 'package:http/http.dart' as http;
 
 import 'widgets/loader.dart';
+import 'widgets/profile_card.dart';
 
 class RootPage extends StatelessWidget {
   // This widget is the root of your application.
@@ -29,9 +30,14 @@ class RootPage extends StatelessWidget {
   }
 }
 
-class GraphQLWidgetScreen extends StatelessWidget {
+class GraphQLWidgetScreen extends StatefulWidget {
   const GraphQLWidgetScreen() : super();
 
+  @override
+  _GraphQLWidgetScreenState createState() => _GraphQLWidgetScreenState();
+}
+
+class _GraphQLWidgetScreenState extends State<GraphQLWidgetScreen> {
   Future<String> getAuthToken() async {
     final response = await http.post(
       Uri.https('api.producthunt.com', 'v2/oauth/token'),
@@ -78,60 +84,61 @@ class GraphQLWidgetScreen extends StatelessWidget {
       body: GraphQLProvider(
         client: client,
         child: CacheProvider(
-            child: Query(
-          options: QueryOptions(
-            document: gql(readPosts),
-            variables: <String, dynamic>{'after': ''},
-            //pollInterval: 10,
-          ),
-          builder: (QueryResult result, {refetch, FetchMore fetchMore}) {
-            if (result.hasException) {
-              return Text(result.exception.toString());
-            }
+          child: Query(
+            options: QueryOptions(
+              document: gql(readPosts),
+              variables: <String, dynamic>{'after': ''},
+              //pollInterval: 10,
+            ),
+            builder: (QueryResult result, {refetch, FetchMore fetchMore}) {
+              if (result.hasException) {
+                return Text(result.exception.toString());
+              }
 
-            if (result.isLoading && result.data == null) {
-              return Center(
-                child: Loader(),
+              if (result.isLoading && result.data == null) {
+                return Center(
+                  child: Loader(),
+                );
+              }
+
+              if (result.data == null && !result.hasException) {
+                return const Text('No data found');
+              }
+
+              final edges = (result.data['posts']['edges'] as List<dynamic>);
+              final Map pageInfo = result.data['posts']['pageInfo'];
+              final String fetchMoreCursor = pageInfo['endCursor'];
+              final opts = FetchMoreOptions(
+                variables: {'after': fetchMoreCursor},
+                updateQuery: (previousResultData, fetchMoreResultData) {
+                  final posts = [
+                    ...fetchMoreResultData['posts']['edges'] as List<dynamic>
+                  ];
+
+                  fetchMoreResultData['posts']['edges'] = posts;
+                  return fetchMoreResultData;
+                },
               );
-            }
 
-            if (result.data == null && !result.hasException) {
-              return const Text(
-                  'Both data and errors are null, this is a known bug after refactoring, you might have forgotten to set Github token');
-            }
+              onFetchMore() {
+                fetchMore(opts);
+              }
 
-            // result.data can be either a [List<dynamic>] or a [Map<String, dynamic>]
-            final edges = (result.data['posts']['edges'] as List<dynamic>);
-            final Map pageInfo = result.data['posts']['pageInfo'];
-            final String fetchMoreCursor = pageInfo['endCursor'];
-            final opts = FetchMoreOptions(
-              variables: {'cursor': fetchMoreCursor},
-              updateQuery: (previousResultData, fetchMoreResultData) {
-                // this is where you combine your previous data and response
-                // in this case, we want to display previous repos plus next repos
-                // so, we combine data in both into a single list of repos
-                final posts = [
-                  ...previousResultData['posts']['edges'] as List<dynamic>,
-                  ...fetchMoreResultData['posts']['edges'] as List<dynamic>
-                ];
+              final List<Post> posts = edges.map((edge) {
+                final post = Post.fromJson(edge);
+                return post;
+              }).toList();
 
-                // to avoid alot of work, lets just update the list of repos in returned
-                // data with new data, this also ensure we have the endCursor already set
-                // correctlty
-                fetchMoreResultData['posts']['edges'] = posts;
+              print('posts, ${posts.length}');
 
-                return fetchMoreResultData;
-              },
-            );
-
-            final MatchEngine matchEngine = new MatchEngine(
-                matches: edges.map((edge) {
-              final post = Post.fromJson(edge);
-              return Match(post: post);
-            }).toList());
-            return MyHomePage(matchEngine: matchEngine);
-          },
-        )),
+              return MyHomePage(
+                key: UniqueKey(),
+                posts: posts,
+                onFetchMore: onFetchMore,
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -141,24 +148,40 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({
     Key key,
     this.title,
-    this.matchEngine,
+    this.posts,
+    this.onFetchMore,
   }) : super(key: key);
 
   final String title;
-  final MatchEngine matchEngine;
+  final List<Post> posts;
+  final Function onFetchMore;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Match match = new Match();
-  MatchEngine matchEngine;
+  List<Post> posts;
+  Function onFetchMore;
+  SwipeableStackController _controller;
 
   @override
   void initState() {
     super.initState();
-    matchEngine = widget.matchEngine;
+    posts = widget.posts;
+    onFetchMore = widget.onFetchMore;
+    _controller = SwipeableStackController()..addListener(callFetchMore);
+  }
+
+  callFetchMore() {
+    if (posts.length - 1 <= _controller.currentIndex) {
+      onFetchMore();
+    }
+  }
+
+  void launchURL(slug) async {
+    final url = 'https://www.producthunt.com/posts/$slug';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
   Widget _buildAppBar() {
@@ -191,7 +214,9 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icons.clear,
               iconColor: Colors.red,
               onPressed: () {
-                matchEngine.currentMatch.nope();
+                _controller.next(
+                  swipeDirection: SwipeDirection.left,
+                );
               },
             ),
             SizedBox(
@@ -201,7 +226,9 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icons.favorite,
               iconColor: Colors.green,
               onPressed: () {
-                matchEngine.currentMatch.like();
+                _controller.next(
+                  swipeDirection: SwipeDirection.right,
+                );
               },
             ),
           ],
@@ -222,13 +249,40 @@ class _MyHomePageState extends State<MyHomePage> {
             maxHeight: 730,
           ),
           padding: EdgeInsets.all(10),
-          child: new CardStack(
-            matchEngine: matchEngine,
+          child: SwipeableStack(
+            controller: _controller,
+            onSwipeCompleted: (index, direction) {
+              if (direction == SwipeDirection.right) {
+                final Post post = posts[index];
+                launchURL(post.node.slug);
+              }
+            },
+            onWillMoveNext: (index, direction) {
+              final allowedActions = [
+                SwipeDirection.right,
+                SwipeDirection.left,
+              ];
+              return allowedActions.contains(direction);
+            },
+            builder: (context, index, constraints) {
+              final Post post = posts[index];
+              return ProfileCard(
+                post: post,
+              );
+            },
+            itemCount: posts.length,
           ),
         ),
       ),
       bottomNavigationBar: _buildBottomBar(),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.removeListener(callFetchMore);
+    _controller.dispose();
   }
 }
 

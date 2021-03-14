@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import 'widgets/custom_thumbnail.dart';
-import 'widgets/custom_youtube_device_player.dart';
+import 'custom_thumbnail.dart';
+import 'custom_youtube_device_player.dart';
 
 class PhotoBrowser extends StatefulWidget {
   final List<Media> photoAssetPaths;
