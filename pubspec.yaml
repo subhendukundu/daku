@@ -21,6 +21,8 @@ dependencies:
   google_fonts:
   url_launcher:
   swipable_stack: 0.3.0
+  hive:
+  provider:
 
 dev_dependencies:
   flutter_test:

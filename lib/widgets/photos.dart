@@ -9,10 +9,14 @@ import 'custom_youtube_device_player.dart';
 class PhotoBrowser extends StatefulWidget {
   final List<Media> photoAssetPaths;
   final int visiblePhotoIndex;
+  final Function prevImage;
+  final Function nextImage;
 
   PhotoBrowser({
     this.photoAssetPaths,
     this.visiblePhotoIndex,
+    this.prevImage,
+    this.nextImage,
   });
 
   @override
@@ -21,11 +25,15 @@ class PhotoBrowser extends StatefulWidget {
 
 class _PhotoBrowserState extends State<PhotoBrowser> {
   int visiblePhotoIndex;
+  Function nextImage;
+  Function prevImage;
 
   @override
   void initState() {
     super.initState();
     visiblePhotoIndex = widget.visiblePhotoIndex;
+    prevImage = widget.prevImage;
+    nextImage = widget.nextImage;
   }
 
   @override
@@ -39,17 +47,11 @@ class _PhotoBrowserState extends State<PhotoBrowser> {
   }
 
   void _prevImage() {
-    setState(() {
-      visiblePhotoIndex = visiblePhotoIndex > 0 ? visiblePhotoIndex - 1 : 0;
-    });
+    prevImage();
   }
 
   void _nextImage() {
-    setState(() {
-      visiblePhotoIndex = visiblePhotoIndex < widget.photoAssetPaths.length - 1
-          ? visiblePhotoIndex + 1
-          : visiblePhotoIndex;
-    });
+    nextImage();
   }
 
   Widget _buildPhotoControls() {
@@ -82,37 +84,11 @@ class _PhotoBrowserState extends State<PhotoBrowser> {
     );
   }
 
-  Widget playHostedVideo(BuildContext context, String videoId) {
-    if (kIsWeb) {
-      return CustomThumbnail(
-        videoId: videoId,
-      );
-    } else {
-      return CustomYoutubeDevicePlayer(videoId: videoId);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final Media currentMedia = widget.photoAssetPaths[visiblePhotoIndex];
-    final isVideoAvailable = currentMedia.videoUrl != null;
-    String videoId = isVideoAvailable
-        ? YoutubePlayer.convertUrlToId(currentMedia.videoUrl)
-        : '';
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        isVideoAvailable
-            ? Container(
-                child: playHostedVideo(
-                  context,
-                  videoId,
-                ),
-              )
-            : Image.network(
-                currentMedia.url,
-                fit: BoxFit.fitWidth,
-              ),
         new Positioned(
           top: 0.0,
           left: 0.0,
@@ -137,14 +113,14 @@ class SelectedPhotoIndicator extends StatelessWidget {
     this.photoCount,
   });
 
-  Widget _buildInactiveIndicator() {
+  Widget _buildInactiveIndicator(BuildContext context) {
     return new Expanded(
       child: new Padding(
         padding: const EdgeInsets.only(left: 2.0, right: 2.0),
         child: new Container(
-          height: 3.0,
+          height: 5.0,
           decoration: new BoxDecoration(
-            color: Colors.black.withOpacity(0.2),
+            color: Theme.of(context).indicatorColor,
             borderRadius: new BorderRadius.circular(2.5),
           ),
         ),
@@ -152,14 +128,14 @@ class SelectedPhotoIndicator extends StatelessWidget {
     );
   }
 
-  Widget _buildActiveIndicator() {
+  Widget _buildActiveIndicator(BuildContext context) {
     return new Expanded(
       child: new Padding(
         padding: const EdgeInsets.only(left: 2.0, right: 2.0),
         child: new Container(
-          height: 3.0,
+          height: 5.0,
           decoration: new BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).highlightColor,
             borderRadius: new BorderRadius.circular(2.5),
             boxShadow: [
               new BoxShadow(
@@ -175,13 +151,13 @@ class SelectedPhotoIndicator extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildIndicators() {
+  List<Widget> _buildIndicators(BuildContext context) {
     List<Widget> indicators = [];
     for (int i = 0; i < photoCount; i++) {
       indicators.add(
         i == visiblePhotoIndex
-            ? _buildActiveIndicator()
-            : _buildInactiveIndicator(),
+            ? _buildActiveIndicator(context)
+            : _buildInactiveIndicator(context),
       );
     }
     return indicators;
@@ -190,9 +166,9 @@ class SelectedPhotoIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Padding(
-      padding: const EdgeInsets.all(0.0),
+      padding: const EdgeInsets.only(top: 5.0),
       child: new Row(
-        children: _buildIndicators(),
+        children: _buildIndicators(context),
       ),
     );
   }

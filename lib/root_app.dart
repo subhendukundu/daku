@@ -1,30 +1,33 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'configs/constants.dart';
 import 'models/post.dart';
 import 'package:http/http.dart' as http;
 
+import 'providers/theme_provider.dart';
 import 'widgets/loader.dart';
 import 'widgets/profile_card.dart';
 
-class RootPage extends StatelessWidget {
-  // This widget is the root of your application.
+class RootPage extends StatefulWidget with WidgetsBindingObserver {
+  final ThemeProvider themeProvider;
+
+  const RootPage({Key key, @required this.themeProvider}) : super(key: key);
+  @override
+  _RootPageState createState() => _RootPageState();
+}
+
+class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Daku, A Tinder for Products',
-      theme: ThemeData(
-        primaryColorBrightness: Brightness.light,
-        primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.latoTextTheme(
-          Theme.of(context).textTheme,
-        ),
-      ),
+      theme: widget.themeProvider.themeData(),
       home: GraphQLWidgetScreen(),
     );
   }
@@ -184,7 +187,9 @@ class _MyHomePageState extends State<MyHomePage> {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
-  Widget _buildAppBar() {
+  Widget _buildAppBar(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    print(themeProvider.isLightTheme);
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0.0,
@@ -198,6 +203,27 @@ class _MyHomePageState extends State<MyHomePage> {
           width: 40,
         ),
       ),
+      actions: [
+        InkWell(
+          onTap: () async {
+            await themeProvider.toggleThemeData();
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: themeProvider.isLightTheme
+                ? Image.asset(
+                    "assets/images/moon.png",
+                    width: 20,
+                  )
+                : Image.asset(
+                    "assets/images/sun.png",
+                    width: 20,
+                  ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -240,7 +266,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(context),
       body: SwipeableStack(
         controller: _controller,
         onSwipeCompleted: (index, direction) {
@@ -263,11 +289,23 @@ class _MyHomePageState extends State<MyHomePage> {
               constraints: BoxConstraints(
                 minWidth: 300,
                 maxWidth: 500,
-                maxHeight: 730,
+                maxHeight: 680,
               ),
-              padding: EdgeInsets.all(10),
-              child: ProfileCard(
-                post: post,
+              padding: EdgeInsets.all(
+                15,
+              ),
+              color: Colors.transparent,
+              child: Card(
+                shape: const RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Color.fromRGBO(168, 179, 207, 0.2),
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                elevation: 5,
+                child: ProfileCard(
+                  post: post,
+                ),
               ),
             ),
           );
@@ -313,14 +351,21 @@ class RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
       width: size,
       height: size,
+      margin: EdgeInsets.only(
+        bottom: 15,
+      ),
       decoration: new BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white,
+        color: themeProvider.themeData().cardColor,
         boxShadow: [
-          new BoxShadow(color: const Color(0x11000000), blurRadius: 10.0),
+          new BoxShadow(
+            color: const Color(0x11000000),
+            blurRadius: 10.0,
+          ),
         ],
       ),
       child: new RawMaterialButton(

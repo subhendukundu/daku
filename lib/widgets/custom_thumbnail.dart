@@ -21,7 +21,9 @@ class _CustomThumbnailState extends State<CustomThumbnail> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size?.height;
     return Container(
+      height: height * 0.3,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(

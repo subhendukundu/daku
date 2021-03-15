@@ -5,15 +5,15 @@ const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "version.json": "7522c87f1bcef158d17d7b0b7213417b",
 "favicon.ico": "801814df92e9a23916f1d8564bd4fb32",
-"index.html": "15763c78ce298a219de836741a4bd594",
-"/": "15763c78ce298a219de836741a4bd594",
-"main.dart.js": "0f04067aef11526ad013fe99eeec9287",
+"index.html": "d637037e5ba32b7a328667a8e9094e54",
+"/": "d637037e5ba32b7a328667a8e9094e54",
+"main.dart.js": "26d39004778a9ef880b1a6a1e3fd4e49",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "dd1ab20778fa4c8c127a5f4ccd4228af",
 "icons/Icon-512.png": "9cbaf687e2e3098bf6acb6eccb0d9c59",
 "manifest.json": "1fa183d60a2342656c103843c1c52517",
-"assets/AssetManifest.json": "bed2029a6ce80de245ef4123d3ef2ee4",
-"assets/NOTICES": "227025ce698ddeeb2f0070561b5932ee",
+"assets/AssetManifest.json": "9fd010c6279020bbd706aa578a91e704",
+"assets/NOTICES": "1d4605c614c96a8e405a7ea6017fd40d",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/youtube_player_flutter/assets/speedometer.webp": "50448630e948b5b3998ae5a5d112622b",
@@ -21,8 +21,10 @@ const RESOURCES = {
 "assets/packages/flutter_inappwebview/t_rex_runner/t-rex.html": "16911fcc170c8af1c5457940bd0bf055",
 "assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
 "assets/assets/riv/logo.riv": "323cde4151ab59b96fde652159992922",
+"assets/assets/images/moon.png": "9bc36adf0c2a1482659e23aaecde2c0a",
 "assets/assets/images/logo.png": "c93b8f2e59f3c70758d125e653061fd0",
-"assets/assets/images/product-hunt-logo-orange-240.png": "fd2fefdfbfd794c060aa40410938f17e"
+"assets/assets/images/product-hunt-logo-orange-240.png": "fd2fefdfbfd794c060aa40410938f17e",
+"assets/assets/images/sun.png": "da0fdb68f2ba7152f065317e33634132"
 };
 
 // The application shell files that are downloaded before a service worker can

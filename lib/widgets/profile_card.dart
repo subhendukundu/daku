@@ -1,6 +1,10 @@
 import 'package:daku/models/post.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import 'custom_thumbnail.dart';
+import 'custom_youtube_device_player.dart';
 import 'photos.dart';
 
 class ProfileCard extends StatefulWidget {
@@ -16,10 +20,33 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
+  int visiblePhotoIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void prevImage() {
+    setState(() {
+      visiblePhotoIndex = visiblePhotoIndex > 0 ? visiblePhotoIndex - 1 : 0;
+    });
+  }
+
+  void nextImage() {
+    setState(() {
+      visiblePhotoIndex = visiblePhotoIndex < widget.post.node.media.length - 1
+          ? visiblePhotoIndex + 1
+          : visiblePhotoIndex;
+    });
+  }
+
   Widget _buildBackground() {
     return new PhotoBrowser(
       photoAssetPaths: widget.post.node.media,
-      visiblePhotoIndex: 0,
+      prevImage: prevImage,
+      nextImage: nextImage,
+      visiblePhotoIndex: visiblePhotoIndex,
     );
   }
 
@@ -30,7 +57,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
   double getDescriptionSize() {
     double width = MediaQuery.of(context).size?.width;
-    return width > 500 ? 18 : 12;
+    return width > 500 ? 16 : 10;
   }
 
   int getMaxLines() {
@@ -38,57 +65,86 @@ class _ProfileCardState extends State<ProfileCard> {
     return height > 600 ? 6 : 4;
   }
 
+  Widget playHostedVideo(BuildContext context, String videoId) {
+    if (kIsWeb) {
+      return CustomThumbnail(
+        videoId: videoId,
+      );
+    } else {
+      return CustomYoutubeDevicePlayer(videoId: videoId);
+    }
+  }
+
   Widget _buildProfileSynopsis() {
+    final Media currentMedia = widget.post.node.media[visiblePhotoIndex];
+    final isVideoAvailable = currentMedia.videoUrl != null;
+    String videoId = isVideoAvailable
+        ? YoutubePlayer.convertUrlToId(currentMedia.videoUrl)
+        : '';
+    double height = MediaQuery.of(context).size?.height;
     return new Positioned(
       left: 0.0,
       right: 0.0,
+      top: 0.0,
       bottom: 0.0,
       child: new Container(
-        decoration: new BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.transparent,
-              Color.fromRGBO(0, 0, 0, 0.8),
-            ],
-          ),
-        ),
-        padding: const EdgeInsets.all(24.0),
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
+        padding: const EdgeInsets.all(15.0),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            new Expanded(
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  new Text(
-                    widget.post.node.name,
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontSize: getTitleSize(),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  new Text(
-                    widget.post.node.description,
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontSize: getDescriptionSize(),
-                    ),
-                    maxLines: getMaxLines(),
-                    overflow: TextOverflow.ellipsis,
-                  )
-                ],
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 10.0,
+              ),
+              child: new Image.asset(
+                "assets/images/product-hunt-logo-orange-240.png",
+                width: 30,
+                height: 30,
               ),
             ),
-            new Image.asset(
-              "assets/images/product-hunt-logo-orange-240.png",
-              width: 30,
+            isVideoAvailable
+                ? Container(
+                    child: playHostedVideo(
+                      context,
+                      videoId,
+                    ),
+                  )
+                : Container(
+                    width: double.maxFinite,
+                    height: height * 0.3,
+                    margin: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(currentMedia.url),
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                new Text(
+                  widget.post.node.name,
+                  style: Theme.of(context).textTheme.headline1.copyWith(
+                        fontSize: getTitleSize(),
+                      ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                new Text(
+                  widget.post.node.description,
+                  style: Theme.of(context).textTheme.subtitle1.copyWith(
+                        fontSize: getDescriptionSize(),
+                      ),
+                  maxLines: getMaxLines(),
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
             ),
           ],
         ),
@@ -100,24 +156,16 @@ class _ProfileCardState extends State<ProfileCard> {
   Widget build(BuildContext context) {
     return Container(
       decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(10.0),
-          boxShadow: [
-            new BoxShadow(
-              color: const Color(0x11000000),
-              blurRadius: 5.0,
-              spreadRadius: 2.0,
-            )
-          ]),
+        borderRadius: new BorderRadius.circular(10.0),
+      ),
       child: ClipRRect(
         borderRadius: new BorderRadius.circular(10.0),
-        child: new Material(
-          child: new Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              _buildBackground(),
-              _buildProfileSynopsis(),
-            ],
-          ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            _buildProfileSynopsis(),
+            _buildBackground(),
+          ],
         ),
       ),
     );
