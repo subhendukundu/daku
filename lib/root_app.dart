@@ -241,38 +241,38 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: Center(
-        child: Container(
-          constraints: BoxConstraints(
-            minWidth: 300,
-            maxWidth: 500,
-            maxHeight: 730,
-          ),
-          padding: EdgeInsets.all(10),
-          child: SwipeableStack(
-            controller: _controller,
-            onSwipeCompleted: (index, direction) {
-              if (direction == SwipeDirection.right) {
-                final Post post = posts[index];
-                launchURL(post.node.slug);
-              }
-            },
-            onWillMoveNext: (index, direction) {
-              final allowedActions = [
-                SwipeDirection.right,
-                SwipeDirection.left,
-              ];
-              return allowedActions.contains(direction);
-            },
-            builder: (context, index, constraints) {
-              final Post post = posts[index];
-              return ProfileCard(
+      body: SwipeableStack(
+        controller: _controller,
+        onSwipeCompleted: (index, direction) {
+          if (direction == SwipeDirection.right) {
+            final Post post = posts[index];
+            launchURL(post.node.slug);
+          }
+        },
+        onWillMoveNext: (index, direction) {
+          final allowedActions = [
+            SwipeDirection.right,
+            SwipeDirection.left,
+          ];
+          return allowedActions.contains(direction);
+        },
+        builder: (context, index, constraints) {
+          final Post post = posts[index];
+          return Center(
+            child: Container(
+              constraints: BoxConstraints(
+                minWidth: 300,
+                maxWidth: 500,
+                maxHeight: 730,
+              ),
+              padding: EdgeInsets.all(10),
+              child: ProfileCard(
                 post: post,
-              );
-            },
-            itemCount: posts.length,
-          ),
-        ),
+              ),
+            ),
+          );
+        },
+        itemCount: posts.length,
       ),
       bottomNavigationBar: _buildBottomBar(),
     );
