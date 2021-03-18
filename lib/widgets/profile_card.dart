@@ -1,9 +1,8 @@
 import 'package:daku/models/post.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
-import 'custom_thumbnail.dart';
 import 'custom_youtube_device_player.dart';
 import 'photos.dart';
 
@@ -65,21 +64,91 @@ class _ProfileCardState extends State<ProfileCard> {
     return height > 600 ? 6 : 4;
   }
 
-  Widget playHostedVideo(BuildContext context, String videoId) {
-    if (kIsWeb) {
-      return CustomThumbnail(
-        videoId: videoId,
-      );
-    } else {
-      return CustomYoutubeDevicePlayer(videoId: videoId);
-    }
+  void _showDialog(context, videoID) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return YoutubeViewer(
+          videoID,
+        );
+      },
+    );
+  }
+
+  Widget ytPlayer(videoID) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          _showDialog(
+            context,
+            videoID,
+          );
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (kIsWeb && constraints.maxWidth > 800) {
+                      return Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.all(5),
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: new Image.network(
+                            YoutubePlayerController.getThumbnail(
+                              videoId: videoID,
+                              quality: ThumbnailQuality.max,
+                              webp: false,
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.all(5),
+                        width: MediaQuery.of(context).size.width * 2,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: new Image.network(
+                            YoutubePlayerController.getThumbnail(
+                              videoId: videoID,
+                              quality: ThumbnailQuality.max,
+                              webp: false,
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+            Icon(
+              Icons.play_circle_filled,
+              color: Colors.white,
+              size: 55.0,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildProfileSynopsis() {
     final Media currentMedia = widget.post.node.media[visiblePhotoIndex];
     final isVideoAvailable = currentMedia.videoUrl != null;
     String videoId = isVideoAvailable
-        ? YoutubePlayer.convertUrlToId(currentMedia.videoUrl)
+        ? YoutubePlayerController.convertUrlToId(currentMedia.videoUrl)
         : '';
     double height = MediaQuery.of(context).size?.height;
     return new Positioned(
@@ -105,8 +174,7 @@ class _ProfileCardState extends State<ProfileCard> {
             ),
             isVideoAvailable
                 ? Container(
-                    child: playHostedVideo(
-                      context,
+                    child: ytPlayer(
                       videoId,
                     ),
                   )

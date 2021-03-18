@@ -1,38 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
-class CustomYoutubeDevicePlayer extends StatefulWidget {
-  final String videoId;
-
-  CustomYoutubeDevicePlayer({
-    this.videoId,
-  });
-
+class YoutubeViewer extends StatefulWidget {
+  final String videoID;
+  YoutubeViewer(this.videoID);
   @override
-  _CustomYoutubeDevicePlayerState createState() =>
-      _CustomYoutubeDevicePlayerState();
+  _YoutubeViewerState createState() => _YoutubeViewerState();
 }
 
-class _CustomYoutubeDevicePlayerState extends State<CustomYoutubeDevicePlayer> {
+class _YoutubeViewerState extends State<YoutubeViewer> {
+  // ignore: close_sinks
   YoutubePlayerController _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: widget.videoId,
-      flags: YoutubePlayerFlags(
+      initialVideoId: widget.videoID,
+      params: YoutubePlayerParams(
+        showControls: true,
+        showFullscreenButton: true,
+        desktopMode: false, // false for platform design
         autoPlay: false,
-        mute: false,
+        enableCaption: true,
+        showVideoAnnotations: false,
+        enableJavaScript: true,
+        privacyEnhanced: true,
+        playsInline: true, // iOS only
       ),
-    );
+    )..listen((value) {
+        if (value.isReady && !value.hasPlayed) {
+          _controller
+            ..hidePauseOverlay()
+            // Uncomment below to stop Autoplay
+            // ..play()
+            ..hideTopMenu();
+        }
+      });
+
+    // Uncomment below for device orientation
+    // _controller!.onEnterFullscreen = () {
+    //   SystemChrome.setPreferredOrientations([
+    //     DeviceOrientation.landscapeLeft,
+    //     DeviceOrientation.landscapeRight,
+    //   ]);
+    //   log('Entered Fullscreen');
+    // };
+    // _controller!.onExitFullscreen = () {
+    //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    //   Future.delayed(const Duration(seconds: 1), () {
+    //     _controller!.play();
+    //   });
+    //   Future.delayed(const Duration(seconds: 5), () {
+    //     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    //   });
+    //   log('Exited Fullscreen');
+    // };
   }
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(
+    final player = YoutubePlayerIFrame();
+    return YoutubePlayerControllerProvider(
       controller: _controller,
-      showVideoProgressIndicator: true,
+      child: AlertDialog(
+        insetPadding: EdgeInsets.all(10),
+        backgroundColor: Colors.black,
+        content: player,
+        contentPadding: EdgeInsets.all(0),
+        actions: <Widget>[
+          new Center(
+            child: TextButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

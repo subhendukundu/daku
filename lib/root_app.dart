@@ -78,7 +78,7 @@ class _GraphQLWidgetScreenState extends State<GraphQLWidgetScreen> {
     final client = ValueNotifier<GraphQLClient>(
       GraphQLClient(
         cache: GraphQLCache(),
-        link: link,
+        link: httpLink,
       ),
     );
 
