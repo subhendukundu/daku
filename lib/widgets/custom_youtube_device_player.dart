@@ -21,7 +21,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         showControls: true,
         showFullscreenButton: true,
         desktopMode: false, // false for platform design
-        autoPlay: false,
+        autoPlay: true,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,

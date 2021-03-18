@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daku/models/post.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,34 @@ class _ProfileCardState extends State<ProfileCard> {
     );
   }
 
+  Widget customImage(url, width, [height]) {
+    return CachedNetworkImage(
+      imageUrl: url,
+      imageBuilder: (context, imageProvider) => Container(
+        width: width,
+        height: height,
+        margin: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+          image: DecorationImage(
+            image: imageProvider,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      placeholder: (context, url) => Center(
+        child: CircularProgressIndicator(),
+      ),
+      errorWidget: (context, url, error) => Icon(
+        Icons.error,
+      ),
+    );
+  }
+
   Widget ytPlayer(videoID) {
+    final url = 'https://i1.ytimg.com/vi/$videoID/hqdefault.jpg';
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -94,41 +122,18 @@ class _ProfileCardState extends State<ProfileCard> {
               children: <Widget>[
                 LayoutBuilder(
                   builder: (context, constraints) {
-                    if (kIsWeb && constraints.maxWidth > 800) {
-                      return Container(
-                        color: Colors.transparent,
-                        padding: EdgeInsets.all(5),
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: new Image.network(
-                            YoutubePlayerController.getThumbnail(
-                              videoId: videoID,
-                              quality: ThumbnailQuality.max,
-                              webp: false,
-                            ),
-                            fit: BoxFit.fill,
-                          ),
+                    return Container(
+                      color: Colors.transparent,
+                      padding: EdgeInsets.all(5),
+                      width: MediaQuery.of(context).size.width,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: new Image.network(
+                          url,
+                          fit: BoxFit.fill,
                         ),
-                      );
-                    } else {
-                      return Container(
-                        color: Colors.transparent,
-                        padding: EdgeInsets.all(5),
-                        width: MediaQuery.of(context).size.width * 2,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: new Image.network(
-                            YoutubePlayerController.getThumbnail(
-                              videoId: videoID,
-                              quality: ThumbnailQuality.max,
-                              webp: false,
-                            ),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      );
-                    }
+                      ),
+                    );
                   },
                 ),
               ],
@@ -151,6 +156,7 @@ class _ProfileCardState extends State<ProfileCard> {
         ? YoutubePlayerController.convertUrlToId(currentMedia.videoUrl)
         : '';
     double height = MediaQuery.of(context).size?.height;
+    print(currentMedia.url);
     return new Positioned(
       left: 0.0,
       right: 0.0,
@@ -174,23 +180,15 @@ class _ProfileCardState extends State<ProfileCard> {
             ),
             isVideoAvailable
                 ? Container(
+                    width: double.infinity,
                     child: ytPlayer(
                       videoId,
                     ),
                   )
-                : Container(
-                    width: double.maxFinite,
-                    height: height * 0.3,
-                    margin: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                      image: DecorationImage(
-                        image: NetworkImage(currentMedia.url),
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
+                : customImage(
+                    currentMedia.url,
+                    double.maxFinite,
+                    height * 0.3,
                   ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

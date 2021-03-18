@@ -21,6 +21,7 @@ dependencies:
   swipable_stack: 0.3.0
   hive:
   provider:
+  cached_network_image: ^2.5.1
 
 dev_dependencies:
   flutter_test:
