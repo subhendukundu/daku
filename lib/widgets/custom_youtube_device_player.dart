@@ -68,16 +68,17 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         backgroundColor: Colors.black,
         content: player,
         contentPadding: EdgeInsets.all(0),
-        actions: <Widget>[
-          new Center(
-            child: TextButton(
-              child: new Text("Close"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            CloseButton(
+              color: Color(0xFFD5D3D3),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
