@@ -22,7 +22,7 @@ class _LoaderState extends State<Loader> {
     final file = RiveFile();
     if (file.import(bytes)) {
       setState(() => _riveArtboard = file.mainArtboard
-        ..addController(SimpleAnimation('logo')));
+        ..addController(SimpleAnimation('start')));
     }
   }
 

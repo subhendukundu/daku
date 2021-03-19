@@ -37732,7 +37732,7 @@ else r=new S.GV(r,!1,C.hQ,C.a_,s)
 return M.aeW(s,s,T.mx(r,s,s),s)}}
 A.a6I.prototype={
 $0:function(){var s=C.b.gF(this.b.c)
-s.a0z(new D.Hw("logo",1,new B.hz(!1,new P.bU(t.E))))
+s.a0z(new D.Hw("start",1,new B.hz(!1,new P.bU(t.E))))
 return this.a.d=s},
 $S:136}
 X.ww.prototype={
