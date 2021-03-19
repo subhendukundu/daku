@@ -189,7 +189,7 @@ class _ProfileCardState extends State<ProfileCard> {
                     ),
                   )
                 : customImage(
-                    currentMedia.url,
+                    "${currentMedia.url}&auto=compress&codec=mozjpeg&cs=strip&w=450&h=382&fit=max",
                     double.maxFinite,
                     height * 0.3,
                   ),

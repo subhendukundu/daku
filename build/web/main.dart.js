@@ -36761,7 +36761,7 @@ g=t.w
 s=l.c.a9(g).f
 P.iM(h.a)
 r=U.Um("assets/images/product-hunt-logo-orange-240.png",30,30)
-s=f?M.dk(k,l.a4Y(e),k,k,k,k,k,k,1/0):l.a0_(h.a,17976931348623157e292,s.a.b*0.3)
+s=f?M.dk(k,l.a4Y(e),k,k,k,k,k,k,1/0):l.a0_(H.c(h.a)+"&auto=compress&codec=mozjpeg&cs=strip&w=450&h=382&fit=max",17976931348623157e292,s.a.b*0.3)
 q=l.a.c.a.b
 p=l.c
 p.toString
@@ -41689,9 +41689,9 @@ return L.agt(new P.fv(r,H.B(r).h("fv<1>")),q,b.a,s,p)},
 W5:function(a,b,c){return P.aw6(P.a1Z().a_(a.a),new D.Wh(c))},
 m:function(a,b){if(b==null)return!1
 if(J.P(b)!==H.C(this))return!1
-return b instanceof D.pD&&b.a==this.a&&b.b===this.b},
+return b instanceof D.pD&&b.a===this.a&&b.b===this.b},
 gv:function(a){return P.a9(this.a,this.b,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a)},
-j:function(a){return'NetworkImage("'+H.c(this.a)+'", scale: '+this.b+")"}}
+j:function(a){return'NetworkImage("'+this.a+'", scale: '+this.b+")"}}
 D.Wh.prototype={
 $2:function(a,b){this.a.D(0,new L.fh(a,b))},
 $S:187}
