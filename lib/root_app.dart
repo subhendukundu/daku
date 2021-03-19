@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:rive_splash_screen/rive_splash_screen.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'configs/constants.dart';
@@ -13,22 +14,47 @@ import 'providers/theme_provider.dart';
 import 'widgets/loader.dart';
 import 'widgets/profile_card.dart';
 
-class RootPage extends StatefulWidget with WidgetsBindingObserver {
+class RootPage extends StatelessWidget {
   final ThemeProvider themeProvider;
+  const RootPage({
+    Key key,
+    @required this.themeProvider,
+  }) : super(key: key);
 
-  const RootPage({Key key, @required this.themeProvider}) : super(key: key);
-  @override
-  _RootPageState createState() => _RootPageState();
-}
-
-class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Daku, A Tinder for Products',
-      theme: widget.themeProvider.themeData(),
-      home: GraphQLWidgetScreen(),
+      theme: themeProvider.themeData(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Splash(),
+      },
+    );
+  }
+}
+
+class Splash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SplashScreen.callback(
+      name: 'assets/riv/logo.riv',
+      until: () => Future.delayed(
+        Duration(
+          seconds: 3,
+        ),
+      ),
+      onError: (_, err) {},
+      onSuccess: (err) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GraphQLWidgetScreen(),
+          ),
+        );
+      },
+      startAnimation: 'start',
     );
   }
 }

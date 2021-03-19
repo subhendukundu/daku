@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daku/models/post.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -79,27 +78,31 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 
   Widget customImage(url, width, [height]) {
-    return CachedNetworkImage(
-      imageUrl: url,
-      imageBuilder: (context, imageProvider) => Container(
-        width: width,
-        height: height,
-        margin: EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-          image: DecorationImage(
-            image: imageProvider,
-            fit: BoxFit.cover,
-          ),
+    return Container(
+      color: Colors.transparent,
+      padding: EdgeInsets.all(5),
+      width: width,
+      height: height,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: new Image.network(
+          url,
+          fit: BoxFit.fill,
+          loadingBuilder: (
+            BuildContext context,
+            Widget child,
+            ImageChunkEvent loadingProgress,
+          ) {
+            if (loadingProgress == null) {
+              return child;
+            }
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              ),
+            );
+          },
         ),
-      ),
-      placeholder: (context, url) => Center(
-        child: CircularProgressIndicator(),
-      ),
-      errorWidget: (context, url, error) => Icon(
-        Icons.error,
       ),
     );
   }

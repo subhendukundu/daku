@@ -70,7 +70,7 @@ packages:
       name: connectivity
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "0.4.9+5"
   connectivity_for_web:
     dependency: transitive
     description:
@@ -190,7 +190,7 @@ packages:
       name: gql
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.4"
+    version: "0.12.5-alpha+1615272573372"
   gql_dedupe_link:
     dependency: transitive
     description:
@@ -204,28 +204,28 @@ packages:
       name: gql_error_link
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1-alpha+1601131172858"
+    version: "0.1.1-alpha+1615272573429"
   gql_exec:
     dependency: transitive
     description:
       name: gql_exec
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.5"
+    version: "0.2.6-alpha+1615272573382"
   gql_http_link:
     dependency: transitive
     description:
       name: gql_http_link
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.2"
+    version: "0.2.11-alpha+1599239999284"
   gql_link:
     dependency: transitive
     description:
       name: gql_link
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1"
+    version: "0.3.2-alpha+1615272573392"
   gql_transform_link:
     dependency: transitive
     description:
@@ -233,20 +233,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.5"
+  gql_websocket_link:
+    dependency: transitive
+    description:
+      name: gql_websocket_link
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.8-alpha+1612972259626"
   graphql:
     dependency: transitive
     description:
       name: graphql
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.0-alpha.3"
   graphql_flutter:
     dependency: "direct main"
     description:
       name: graphql_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.0-alpha.3"
   graphs:
     dependency: transitive
     description:
@@ -323,7 +330,7 @@ packages:
       name: normalize
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.7"
+    version: "0.2.4"
   octo_image:
     dependency: transitive
     description:
@@ -429,13 +436,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.8"
+  rive_loading:
+    dependency: transitive
+    description:
+      name: rive_loading
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
+  rive_splash_screen:
+    dependency: "direct main"
+    description:
+      name: rive_splash_screen
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   rxdart:
     dependency: transitive
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.24.1"
+    version: "0.25.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -588,13 +609,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  websocket:
+  web_socket_channel:
     dependency: transitive
     description:
-      name: websocket
+      name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.5"
+    version: "1.2.0"
   win32:
     dependency: transitive
     description:

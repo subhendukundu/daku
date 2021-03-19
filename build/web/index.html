@@ -45,6 +45,12 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.ico"/>
   <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      background-color: #101319;
+      color: #E3E3E3;
+    }
+  </style>
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
@@ -54,7 +60,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('flutter-first-frame', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js?v=2446297390');
+        navigator.serviceWorker.register('flutter_service_worker.js?v=3180027222');
       });
     }
   </script>

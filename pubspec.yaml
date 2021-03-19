@@ -22,6 +22,7 @@ dependencies:
   hive:
   provider:
   cached_network_image: ^2.5.1
+  rive_splash_screen: ^0.0.1
 
 dev_dependencies:
   flutter_test:
