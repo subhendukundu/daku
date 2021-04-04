@@ -87,7 +87,7 @@ class _ProfileCardState extends State<ProfileCard> {
         borderRadius: BorderRadius.circular(10.0),
         child: new Image.network(
           url,
-          fit: BoxFit.fill,
+          fit: BoxFit.contain,
           loadingBuilder: (
             BuildContext context,
             Widget child,
