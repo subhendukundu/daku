@@ -51,12 +51,24 @@ class _ProfileCardState extends State<ProfileCard> {
 
   double getTitleSize() {
     double width = MediaQuery.of(context).size?.width;
-    return width > 500 ? 24 : 18;
+    if (width > 500) {
+      return 24;
+    } else if (width < 350) {
+      return 18;
+    } else {
+      return 20;
+    }
   }
 
   double getDescriptionSize() {
     double width = MediaQuery.of(context).size?.width;
-    return width > 500 ? 16 : 10;
+    if (width > 500) {
+      return 16;
+    } else if (width < 350) {
+      return 13;
+    } else {
+      return 14;
+    }
   }
 
   int getMaxLines() {
