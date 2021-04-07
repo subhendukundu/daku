@@ -53,10 +53,10 @@ class _ProfileCardState extends State<ProfileCard> {
     double width = MediaQuery.of(context).size?.width;
     if (width > 500) {
       return 24;
-    } else if (width < 350) {
-      return 18;
+    } else if (width > 350) {
+      return width * 0.05;
     } else {
-      return 20;
+      return width * 0.04;
     }
   }
 
@@ -64,16 +64,16 @@ class _ProfileCardState extends State<ProfileCard> {
     double width = MediaQuery.of(context).size?.width;
     if (width > 500) {
       return 16;
-    } else if (width < 350) {
-      return 13;
     } else {
-      return 14;
+      print(width * 0.03);
+      return width * 0.03;
     }
   }
 
   int getMaxLines() {
     double height = MediaQuery.of(context).size?.height;
-    return height > 600 ? 6 : 4;
+    print(height);
+    return height > 700 ? 6 : 3;
   }
 
   void _showDialog(context, videoID) {

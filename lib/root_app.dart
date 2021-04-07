@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -213,8 +214,15 @@ class _MyHomePageState extends State<MyHomePage> {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
+  void launchPlayStoreURL() async {
+    final url =
+        'https://play.google.com/store/apps/details?id=io.higgle.dakuapp';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
   Widget _buildAppBar(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    double width = MediaQuery.of(context).size?.width;
     print(themeProvider.isLightTheme);
     return AppBar(
       backgroundColor: Colors.transparent,
@@ -230,6 +238,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       actions: [
+        if (kIsWeb)
+          InkWell(
+            onTap: () async {
+              launchPlayStoreURL();
+            },
+            child: Image.asset(
+              "assets/images/google-play-badge.png",
+              width: width > 500 ? 150 : 100,
+              height: 30,
+            ),
+          ),
         InkWell(
           onTap: () async {
             await themeProvider.toggleThemeData();
