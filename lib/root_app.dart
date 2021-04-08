@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rive_splash_screen/rive_splash_screen.dart';
@@ -220,6 +221,11 @@ class _MyHomePageState extends State<MyHomePage> {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
+  void launchGithubURL() async {
+    final url = 'https://github.com/subhendukundu/daku';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
   Widget _buildAppBar(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     double width = MediaQuery.of(context).size?.width;
@@ -250,22 +256,38 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         InkWell(
-          onTap: () async {
-            await themeProvider.toggleThemeData();
-          },
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 20,
+              horizontal: 10,
             ),
-            child: themeProvider.isLightTheme
-                ? Image.asset(
-                    "assets/images/moon.png",
-                    width: 20,
-                  )
-                : Image.asset(
-                    "assets/images/sun.png",
-                    width: 20,
-                  ),
+            child: Icon(AntDesign.github),
+          ),
+          onTap: () async {
+            launchGithubURL();
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 10.0,
+          ),
+          child: InkWell(
+            onTap: () async {
+              await themeProvider.toggleThemeData();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              child: themeProvider.isLightTheme
+                  ? Image.asset(
+                      "assets/images/moon.png",
+                      width: 20,
+                    )
+                  : Image.asset(
+                      "assets/images/sun.png",
+                      width: 20,
+                    ),
+            ),
           ),
         ),
       ],

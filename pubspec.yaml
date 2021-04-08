@@ -21,14 +21,15 @@ dependencies:
   swipable_stack: 0.3.0
   hive:
   provider:
-  cached_network_image: ^2.5.1
+  cached_network_image:
   rive_splash_screen: ^0.0.1
+  flutter_icons: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   rename:
-  flutter_launcher_icons: "^0.8.0"
+  flutter_launcher_icons: "^0.9.0"
 
 flutter_icons:
   android: "launcher_icon"
