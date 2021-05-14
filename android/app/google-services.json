@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "330727006232",
+    "project_id": "daku-97bd1",
+    "storage_bucket": "daku-97bd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330727006232:android:25f48eb6a5e8720992e36d",
+        "android_client_info": {
+          "package_name": "com.example.daku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330727006232-8u64gh5qpiml6lhm8kl2evk2ej9la25h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFuvE3jAAexuYuesSza6J5UGga5eYUqCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330727006232-8u64gh5qpiml6lhm8kl2evk2ej9la25h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
