@@ -1,25 +1,14 @@
 import 'package:daku/SavedPosts/DetailedPage.dart';
-import 'package:daku/SavedPosts/PostCard.dart';
-import 'package:daku/models/DbNode.dart';
 import 'package:daku/models/post.dart';
 import 'package:daku/widgets/profile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:google_sign_in/google_sign_in.dart';
 
 class Cards extends StatefulWidget {
-  final List<DbNode> posts;
-  final List<Node> singleposts;
+  final List<Node> posts;
   final OnProgress onProgress;
-  final GoogleSignIn googleSignIn;
 
-  Cards(
-      {Key key,
-      this.onProgress,
-      this.posts,
-      this.googleSignIn,
-      this.singleposts})
-      : super(key: key);
+  Cards({Key key, this.onProgress, this.posts}) : super(key: key);
 
   @override
   _CardsState createState() => _CardsState();
@@ -129,7 +118,6 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
           if (kIsWeb) {
             return GestureDetector(
               onTap: () {
-                print('tapped');
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return TransPageView(post: widget.posts[position]);
                 }));
@@ -284,7 +272,7 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
 }
 
 class EventCard extends StatelessWidget {
-  final DbNode post;
+  final Node post;
   final bool interested;
 
   final double opacity;
@@ -304,6 +292,9 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Post postData = Post();
+    postData.node = post;
+
     final Size size = Size(MediaQuery.of(context).size.width * 0.7,
         MediaQuery.of(context).size.height * 0.65);
 
@@ -320,8 +311,9 @@ class EventCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.0),
               child: Card(
                 color: Theme.of(context).primaryColor,
-                child: PostCard(
-                  post: post,
+                child: ProfileCard(
+                  post: postData,
+                  forSavedCard: true,
                 ),
               ),
             ),

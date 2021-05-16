@@ -6,11 +6,14 @@ import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 import 'custom_youtube_device_player.dart';
 import 'photos.dart';
 
+// ignore: must_be_immutable
 class ProfileCard extends StatefulWidget {
   final Post post;
+  bool forSavedCard;
 
   ProfileCard({
     Key key,
+    this.forSavedCard,
     this.post,
   }) : super(key: key);
 
@@ -211,7 +214,9 @@ class _ProfileCardState extends State<ProfileCard> {
                     Container(
                       width: kIsWeb
                           ? MediaQuery.of(context).size.width * 0.2
-                          : MediaQuery.of(context).size.width * 0.5,
+                          : widget.forSavedCard
+                              ? MediaQuery.of(context).size.width * 0.25
+                              : MediaQuery.of(context).size.width * 0.5,
                       child: new Text(
                         widget.post.node.name,
                         overflow: TextOverflow.ellipsis,

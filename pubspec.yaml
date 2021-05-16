@@ -32,14 +32,16 @@ dependencies:
   webview_flutter: ^2.0.4
   device_preview: ^0.7.1
   font_awesome_flutter: ^9.0.0
-  google_sign_in: ^5.0.2
   percent_indicator: ^3.0.1
   sign_button: ^2.0.0
+  firebase_auth: ^1.1.4
+  google_sign_in: ^5.0.3
+  cloud_firestore: ^2.1.0
+  firebase_core: ^1.1.1
+  flutter_phoenix: ^1.0.0
+  firebase_auth_web: ^1.1.2
 
 
-  app_links: ^2.0.0
-  shared_preferences: ^2.0.0
-  nhost_flutter_auth: ^1.0.2
   
 dev_dependencies:
   flutter_test:

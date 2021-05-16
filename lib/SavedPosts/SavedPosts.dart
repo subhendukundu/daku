@@ -1,4 +1,4 @@
-import 'package:daku/Controller/SqlCtrl.dart';
+import 'package:daku/Controller/DatabaseCtrl.dart';
 import 'package:daku/SavedPosts/Card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -15,9 +15,10 @@ class SavedPosts extends StatelessWidget {
         title: Text('Saved Posts'),
       ),
       body: Container(
-        child: GetX<SqlCtrl>(
-            init: SqlCtrl(),
+        child: GetX<DatabaseCtrl>(
+            init: DatabaseCtrl(),
             builder: (controller) {
+              print(controller.nodeList.length);
               if (controller.nodeList.length == 0) {
                 return Center(
                   child: Text(
@@ -33,7 +34,7 @@ class SavedPosts extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Cards(
-                        posts: controller.nodeList.value,
+                        posts: controller.nodeList,
                         onProgress: (progress, direction) {
                           final titleHeight = (60 + 48);
 

@@ -23,6 +23,10 @@ class Node {
   String slug;
   List<Media> media;
   int votesCount;
+  double offset = 0.0;
+  double opacity = 0.0;
+  double sizeOffset = 0.0;
+  double rotation = 0.0;
 
   Node({this.id, this.name, this.description, this.slug, this.media});
 
@@ -49,20 +53,7 @@ class Node {
     if (this.media != null) {
       data['media'] = this.media.map((v) => v.toJson()).toList();
     }
-    print(votesCount);
     data['votesCount'] = this.votesCount;
-    return data;
-  }
-
-  Map<String, dynamic> toJsonForSqlCtrl(mediaId, diaplayImage) {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['slug'] = this.slug;
-    data['media'] = mediaId;
-    data['displayImage'] = diaplayImage;
-
     return data;
   }
 }

@@ -1,19 +1,16 @@
-import 'package:daku/Controller/SqlCtrl.dart';
-import 'package:daku/models/DbNode.dart';
+import 'package:daku/WebView.dart';
 import 'package:daku/models/post.dart';
+import 'package:daku/widgets/CircularPercent.dart';
 import 'package:daku/widgets/TransitionAnimation.dart';
 import 'package:daku/widgets/custom_youtube_device_player.dart';
 import 'package:daku/widgets/photos.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:daku/WebView.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 // ignore: must_be_immutable
 class TransPageView extends StatefulWidget {
   TransPageView({this.post});
-  DbNode post;
+  Node post;
 
   @override
   _TransPageViewState createState() => _TransPageViewState();
@@ -21,21 +18,6 @@ class TransPageView extends StatefulWidget {
 
 class _TransPageViewState extends State<TransPageView> {
   int visiblePhotoIndex = 0;
-  // ignore: deprecated_member_use
-  List<Media> media = List<Media>();
-
-  @override
-  void initState() {
-    super.initState();
-    getMedia();
-  }
-
-  getMedia() {
-    var data = GetStorage().read(widget.post.media);
-    for (int i = 0; i < data.length; i++) {
-      media.add(Media.fromJson(data[i]));
-    }
-  }
 
   void prevImage() {
     setState(() {
@@ -45,7 +27,7 @@ class _TransPageViewState extends State<TransPageView> {
 
   void nextImage() {
     setState(() {
-      visiblePhotoIndex = visiblePhotoIndex < media.length - 1
+      visiblePhotoIndex = visiblePhotoIndex < widget.post.media.length - 1
           ? visiblePhotoIndex + 1
           : visiblePhotoIndex;
     });
@@ -53,7 +35,7 @@ class _TransPageViewState extends State<TransPageView> {
 
   Widget _buildBackground() {
     return new PhotoBrowser(
-      photoAssetPaths: media,
+      photoAssetPaths: widget.post.media,
       prevImage: prevImage,
       nextImage: nextImage,
       visiblePhotoIndex: visiblePhotoIndex,
@@ -184,12 +166,15 @@ class _TransPageViewState extends State<TransPageView> {
           Positioned(
             top: MediaQuery.of(context).size.height * 0.36,
             left: MediaQuery.of(context).size.height * 0.01,
-            child: Text(
-              widget.post.name,
-              style: TextStyle(
-                  color: Theme.of(context).highlightColor,
-                  fontSize: MediaQuery.of(context).size.height * 0.03,
-                  fontWeight: FontWeight.bold),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Text(
+                widget.post.name,
+                style: TextStyle(
+                    color: Theme.of(context).highlightColor,
+                    fontSize: MediaQuery.of(context).size.height * 0.03,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           Positioned(
@@ -223,7 +208,7 @@ class _TransPageViewState extends State<TransPageView> {
           Positioned(
             bottom: MediaQuery.of(context).size.width * 0.3,
             left: MediaQuery.of(context).size.width * 0.3,
-            child: _buildCircularPercent(),
+            child: buildCircularPercent(context),
           ),
           Positioned(
             bottom: MediaQuery.of(context).size.width * 0.07,
@@ -261,39 +246,8 @@ class _TransPageViewState extends State<TransPageView> {
     );
   }
 
-  _buildCircularPercent() {
-    SqlCtrl sql = SqlCtrl();
-    int right = sql.leftSwiped.value;
-    int left = sql.rightSwiped.value;
-    print(sql.userLoggedIn);
-
-    double persent = SqlCtrl().nodeList.length != 0
-        ? double.parse((right / (right + left)).toStringAsFixed(1))
-        : 1.0;
-    return sql.userLoggedIn
-        ? CircularPercentIndicator(
-            radius: 100.0,
-            lineWidth: 5.0,
-            animation: true,
-            percent: 1 - persent,
-            center: new Text(
-              ((1 - persent) * 100).toString().substring(0, 3),
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            ),
-            footer: new Text(
-              'Total Right Swiped',
-              style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: MediaQuery.of(context).size.width * 0.05),
-            ),
-            circularStrokeCap: CircularStrokeCap.round,
-            progressColor: Colors.green,
-          )
-        : SizedBox();
-  }
-
   _buildMedia() {
-    final Media currentMedia = media[visiblePhotoIndex];
+    final Media currentMedia = widget.post.media[visiblePhotoIndex];
     final isVideoAvailable = currentMedia.videoUrl != null;
     String videoId = isVideoAvailable
         ? YoutubePlayerController.convertUrlToId(currentMedia.videoUrl)
@@ -365,7 +319,7 @@ class _TransPageViewState extends State<TransPageView> {
           child: InkWell(
               onTap: () {
                 setState(() {
-                  if (visiblePhotoIndex != media.length - 1)
+                  if (visiblePhotoIndex != widget.post.media.length - 1)
                     visiblePhotoIndex += 1;
                 });
               },
