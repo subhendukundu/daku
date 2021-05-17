@@ -73,6 +73,46 @@ class DatabaseCtrl extends GetxController {
     });
   }
 
+  Future<void> signInWithGoogleForWeb() async {
+    // Create a new provider
+    GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+    googleProvider
+        .addScope('https://www.googleapis.com/auth/contacts.readonly');
+    googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+
+    // Once signed in, return the UserCredential
+    final UserCredential credential =
+        await FirebaseAuth.instance.signInWithPopup(googleProvider);
+
+    UserModel userData = UserModel(
+        imageUrl: credential.user.photoURL,
+        name: credential.user.displayName,
+        rightSwiped: 0,
+        leftSwipled: 0);
+
+    await FirebaseFirestore.instance
+        .collection('UserData')
+        .doc(credential.user.uid)
+        .get()
+        .then((value) {
+      if (value.exists) {
+        print('Already Signed In');
+        // Get.offAll(() => CustomNavigation(
+        //       showPopUps: false,
+        // ));
+      } else {
+        FirebaseFirestore.instance
+            .collection('UserData')
+            .doc(credential.user.uid)
+            .set(userData.toJson());
+      }
+    });
+
+    // Or use signInWithRedirect
+    // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+  }
+
   void insert(Node info) async {
     if (ifUserLoggedIn()) {
       FirebaseFirestore.instance

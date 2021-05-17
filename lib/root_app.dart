@@ -559,21 +559,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   '1000+ users have joined so far',
                   style: TextStyle(
                       color: Theme.of(context).highlightColor,
-                      fontSize: MediaQuery.of(context).size.width * 0.04),
+                      fontSize: MediaQuery.of(context).size.height * 0.02),
                 ),
                 SignInButton(
-                  imagePosition: ImagePosition.left, // left or right
-                  buttonType: ButtonType.google,
-                  btnColor: Theme.of(context).secondaryHeaderColor,
-                  buttonSize: ButtonSize.small,
-                  onPressed: () =>
-                      DatabaseCtrl().authenticationWithGoogle().then((value) {
-                    Get.reset();
-                    // Get.put(DatabaseCtrl());
-                    Phoenix.rebirth(context);
-                    analyicsDialog();
-                  }),
-                ),
+                    imagePosition: ImagePosition.left, // left or right
+                    buttonType: ButtonType.google,
+                    btnColor: Theme.of(context).secondaryHeaderColor,
+                    buttonSize: ButtonSize.small,
+                    onPressed: () {
+                      kIsWeb
+                          ? DatabaseCtrl()
+                              .signInWithGoogleForWeb()
+                              .then((value) {
+                              Get.reset();
+
+                              Phoenix.rebirth(context);
+                              analyicsDialog();
+                            })
+                          : DatabaseCtrl()
+                              .authenticationWithGoogle()
+                              .then((value) {
+                              Get.reset();
+                              Phoenix.rebirth(context);
+                              analyicsDialog();
+                            });
+                    }),
               ],
             ),
           ),

@@ -206,39 +206,39 @@ class _TransPageViewState extends State<TransPageView> {
             ),
           ),
           Positioned(
-            bottom: MediaQuery.of(context).size.width * 0.3,
-            left: MediaQuery.of(context).size.width * 0.3,
-            child: buildCircularPercent(context),
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).size.width * 0.07,
-            left: MediaQuery.of(context).size.width * 0.15,
-            child: RawMaterialButton(
-              fillColor: Theme.of(context).highlightColor,
-              // splashColor: Theme.of(context).primaryColor,
-              hoverColor: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    SizeTransition1(WebViewPage(
-                      title: widget.post.name,
-                      url: widget.post.slug,
-                    )));
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              child: Container(
-                child: Center(
-                    child: Text(
-                  'View On Producthunt',
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.height * 0.018),
-                )),
-                width: MediaQuery.of(context).size.width * 0.7,
-                height: MediaQuery.of(context).size.width * 0.15,
-              ),
+            bottom: MediaQuery.of(context).size.height * 0.04,
+            left: MediaQuery.of(context).size.width * 0.2,
+            child: Column(
+              children: [
+                buildCircularPercent(context),
+                RawMaterialButton(
+                  fillColor: Theme.of(context).highlightColor,
+                  // splashColor: Theme.of(context).primaryColor,
+                  hoverColor: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        SizeTransition1(WebViewPage(
+                          title: widget.post.name,
+                          url: widget.post.slug,
+                        )));
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Container(
+                    child: Center(
+                        child: Text(
+                      'View On Producthunt',
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.height * 0.018),
+                    )),
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -231,7 +231,7 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
         opacityTweens.add(Tween(
             begin: widget.posts[i].opacity,
             end: i == position
-                ? 1.0
+                ? 0.0
                 : i >= position + 3
                     ? 0.4
                     : 1 - (0.3 * (i - position - 1))));
@@ -297,6 +297,8 @@ class EventCard extends StatelessWidget {
 
     final Size size = Size(MediaQuery.of(context).size.width * 0.7,
         MediaQuery.of(context).size.height * 0.65);
+
+    final Size webSize = Size(260, 500);
 
     return Transform.translate(
       offset: Offset(30 + offset, sizeOffset / 12),
