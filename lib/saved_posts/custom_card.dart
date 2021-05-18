@@ -1,5 +1,5 @@
 import 'package:daku/models/post.dart';
-import 'package:daku/savedposts/detailed_page.dart';
+import 'package:daku/saved_posts/detailed_page.dart';
 import 'package:daku/widgets/profile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:daku/controller/database_ctrl.dart';
-import 'package:daku/savedposts/saved_posts.dart';
+import 'package:daku/saved_posts/saved_posts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';

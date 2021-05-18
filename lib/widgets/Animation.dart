@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:daku/savedposts/detailed_page.dart';
+import 'package:daku/saved_posts/detailed_page.dart';
 import 'package:flutter/material.dart';
 
 class SlideFadeTransition extends StatefulWidget {

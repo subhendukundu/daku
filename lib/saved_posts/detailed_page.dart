@@ -1,5 +1,5 @@
 import 'package:daku/models/post.dart';
-import 'package:daku/savedposts/web_view.dart';
+import 'package:daku/saved_posts/web_view.dart';
 import 'package:daku/widgets/circularPercent.dart';
 import 'package:daku/widgets/transitionAnimation.dart';
 import 'package:daku/widgets/custom_youtube_device_player.dart';
