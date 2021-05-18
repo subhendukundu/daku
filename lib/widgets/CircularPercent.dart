@@ -1,4 +1,4 @@
-import 'package:daku/Controller/DatabaseCtrl.dart';
+import 'package:daku/controller/database_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';

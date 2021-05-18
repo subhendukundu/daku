@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:daku/SavedPosts/SavedPosts.dart';
+import 'package:daku/controller/database_ctrl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -20,7 +21,6 @@ import 'package:http/http.dart' as http;
 import 'providers/theme_provider.dart';
 import 'widgets/loader.dart';
 import 'widgets/profile_card.dart';
-import 'Controller/DatabaseCtrl.dart';
 import 'widgets/circularPercent.dart';
 
 class RootPage extends StatelessWidget {

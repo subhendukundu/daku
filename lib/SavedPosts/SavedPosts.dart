@@ -1,5 +1,5 @@
-import 'package:daku/Controller/DatabaseCtrl.dart';
 import 'package:daku/SavedPosts/Card.dart';
+import 'package:daku/controller/database_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
