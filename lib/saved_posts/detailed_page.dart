@@ -1,7 +1,7 @@
 import 'package:daku/models/post.dart';
 import 'package:daku/saved_posts/web_view.dart';
-import 'package:daku/widgets/circularPercent.dart';
-import 'package:daku/widgets/transitionAnimation.dart';
+import 'package:daku/widgets/circular_percent.dart';
+import 'package:daku/widgets/transition_animation.dart';
 import 'package:daku/widgets/custom_youtube_device_player.dart';
 import 'package:daku/widgets/photos.dart';
 import 'package:flutter/foundation.dart';

@@ -21,7 +21,7 @@ import 'package:http/http.dart' as http;
 import 'providers/theme_provider.dart';
 import 'widgets/loader.dart';
 import 'widgets/profile_card.dart';
-import 'widgets/circularPercent.dart';
+import 'widgets/circular_percent.dart';
 
 class RootPage extends StatelessWidget {
   final ThemeProvider themeProvider;

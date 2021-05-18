@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daku/models/UserModel.dart';
-import 'package:daku/widgets/toast.dart';
+import 'package:daku/models/user_model.dart';
+import 'package:daku/widgets/flutter_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart' hide Node;
 import 'package:google_sign_in/google_sign_in.dart';
