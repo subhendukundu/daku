@@ -29,7 +29,9 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
   @override
   void initState() {
     _swipeController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 250))
+      vsync: this,
+      duration: Duration(milliseconds: 250),
+    )
       ..addListener(() {
         setState(() {
           final curve = CurvedAnimation(
@@ -51,13 +53,15 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
           }
         });
       })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          position += 1;
-          widget.onProgress(100, Direction.NONE);
-          direction = Direction.NONE;
-        }
-      });
+      ..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            position += 1;
+            widget.onProgress(100, Direction.NONE);
+            direction = Direction.NONE;
+          }
+        },
+      );
 
     _backController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 250))
@@ -100,11 +104,12 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
       onHorizontalDragUpdate: _onDragUpdate,
       onHorizontalDragEnd: _onDragEnd,
       child: Stack(
-          // ignore: deprecated_member_use
-          overflow: Overflow.clip,
-          // fit: StackFit.loose,
-          alignment: Alignment.centerLeft,
-          children: _buildStack()),
+        // ignore: deprecated_member_use
+        overflow: Overflow.clip,
+        // fit: StackFit.loose,
+        alignment: Alignment.centerLeft,
+        children: _buildStack(),
+      ),
     );
   }
 
@@ -118,9 +123,14 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
           if (kIsWeb) {
             return GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return TransPageView(post: widget.posts[position]);
-                }));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return TransPageView(post: widget.posts[position]);
+                    },
+                  ),
+                );
               },
               child: Center(
                 child: EventCard(
@@ -135,9 +145,14 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
           } else {
             return InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return TransPageView(post: widget.posts[position]);
-                }));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return TransPageView(post: widget.posts[position]);
+                    },
+                  ),
+                );
               },
               child: EventCard(
                 post: model,
@@ -211,45 +226,70 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
 
     if (direction == Direction.AWAY && position != widget.posts.length - 1) {
       for (var i = position; i < widget.posts.length; ++i) {
-        rotationTween.add(Tween(
+        rotationTween.add(
+          Tween(
             begin: widget.posts[i].rotation,
-            end: i == position ? 0.05 : 0.0 * (i - position - 1)));
-        offsetTweens.add(Tween(
+            end: i == position ? 0.05 : 0.0 * (i - position - 1),
+          ),
+        );
+        offsetTweens.add(
+          Tween(
             begin: widget.posts[i].offset,
             end: i == position
                 ? -360.0
                 : i >= position + 4
                     ? 80
-                    : 80.0 * (i - position - 1)));
-        sizeOffsetTweens.add(Tween(
+                    : 80.0 * (i - position - 1),
+          ),
+        );
+        sizeOffsetTweens.add(
+          Tween(
             begin: widget.posts[i].sizeOffset,
             end: i == position
                 ? 0
                 : i >= position + 4
                     ? 80
-                    : 40.0 * (i - position - 1)));
-        opacityTweens.add(Tween(
+                    : 40.0 * (i - position - 1),
+          ),
+        );
+        opacityTweens.add(
+          Tween(
             begin: widget.posts[i].opacity,
             end: i == position
                 ? 0.0
                 : i >= position + 3
                     ? 0.4
-                    : 1 - (0.3 * (i - position - 1))));
+                    : 1 - (0.3 * (i - position - 1)),
+          ),
+        );
       }
       _swipeController.forward(from: 0.0);
     } else {
       for (var i = position; i < widget.posts.length; ++i) {
-        rotationTween.add(Tween(
-            begin: widget.posts[i].rotation, end: 0.0 * (i - position - 1)));
-        offsetTweens.add(Tween(
+        rotationTween.add(
+          Tween(
+            begin: widget.posts[i].rotation,
+            end: 0.0 * (i - position - 1),
+          ),
+        );
+        offsetTweens.add(
+          Tween(
             begin: widget.posts[i].offset,
-            end: i >= position + 3 ? 80 : 70.0 * (i - position)));
-        sizeOffsetTweens.add(Tween(
+            end: i >= position + 3 ? 80 : 70.0 * (i - position),
+          ),
+        );
+        sizeOffsetTweens.add(
+          Tween(
             begin: widget.posts[i].sizeOffset,
-            end: i >= position + 3 ? 80 : 40.0 * (i - position)));
-        opacityTweens.add(Tween(
+            end: i >= position + 3 ? 80 : 40.0 * (i - position),
+          ),
+        );
+        opacityTweens.add(
+          Tween(
             begin: widget.posts[i].opacity,
-            end: i >= position + 3 ? 0 : 1 - (0.3 * (i - position))));
+            end: i >= position + 3 ? 0 : 1 - (0.3 * (i - position)),
+          ),
+        );
       }
       _backController.forward(from: 0.0);
     }
@@ -297,8 +337,6 @@ class EventCard extends StatelessWidget {
 
     final Size size = Size(MediaQuery.of(context).size.width * 0.7,
         MediaQuery.of(context).size.height * 0.65);
-
-    final Size webSize = Size(260, 500);
 
     return Transform.translate(
       offset: Offset(30 + offset, sizeOffset / 12),

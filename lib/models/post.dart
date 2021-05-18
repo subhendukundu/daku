@@ -38,7 +38,9 @@ class Node {
     if (json['media'] != null) {
       media = [];
       json['media'].forEach((v) {
-        media.add(new Media.fromJson(v));
+        media.add(
+          new Media.fromJson(v),
+        );
       });
     }
     votesCount = json['votesCount'];

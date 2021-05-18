@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daku/models/UserModel.dart';
-import 'package:daku/widgets/Toast.dart';
+import 'package:daku/widgets/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart' hide Node;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -61,9 +61,6 @@ class DatabaseCtrl extends GetxController {
         .then((value) {
       if (value.exists) {
         print('Already Signed In');
-        // Get.offAll(() => CustomNavigation(
-        //       showPopUps: false,
-        // ));
       } else {
         FirebaseFirestore.instance
             .collection('UserData')
@@ -98,9 +95,6 @@ class DatabaseCtrl extends GetxController {
         .then((value) {
       if (value.exists) {
         print('Already Signed In');
-        // Get.offAll(() => CustomNavigation(
-        //       showPopUps: false,
-        // ));
       } else {
         FirebaseFirestore.instance
             .collection('UserData')
@@ -108,9 +102,6 @@ class DatabaseCtrl extends GetxController {
             .set(userData.toJson());
       }
     });
-
-    // Or use signInWithRedirect
-    // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
   }
 
   void insert(Node info) async {

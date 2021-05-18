@@ -21,7 +21,7 @@ import 'providers/theme_provider.dart';
 import 'widgets/loader.dart';
 import 'widgets/profile_card.dart';
 import 'Controller/DatabaseCtrl.dart';
-import 'widgets/CircularPercent.dart';
+import 'widgets/circularPercent.dart';
 
 class RootPage extends StatelessWidget {
   final ThemeProvider themeProvider;
@@ -142,7 +142,9 @@ class _GraphQLWidgetScreenState extends State<GraphQLWidgetScreen> {
             ),
             builder: (QueryResult result, {refetch, FetchMore fetchMore}) {
               if (result.hasException) {
-                return Text(result.exception.toString());
+                return Text(
+                  result.exception.toString(),
+                );
               }
 
               if (result.isLoading && result.data == null) {
@@ -262,28 +264,30 @@ class _MyHomePageState extends State<MyHomePage> {
               init: DatabaseCtrl(),
               builder: (controller) {
                 return Container(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(controller.userDataModel.value.imageUrl),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: Text(
-                        controller.userDataModel.value.name ?? '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.017),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            controller.userDataModel.value.imageUrl),
                       ),
-                    ),
-                    // subtitle: Text(user.email),
-                  ],
-                ));
-              })
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Text(
+                          controller.userDataModel.value.name ?? '',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.017),
+                        ),
+                      ),
+                      // subtitle: Text(user.email),
+                    ],
+                  ),
+                );
+              },
+            )
           : SizedBox(),
       leading: Padding(
         padding: const EdgeInsets.only(
@@ -342,26 +346,34 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
         InkWell(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              child: Icon(
-                Icons.favorite,
-                color: Theme.of(context).highlightColor,
-              ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
             ),
-            onTap: () async {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return SavedPosts();
-              }));
-            }),
+            child: Icon(
+              Icons.favorite,
+              color: Theme.of(context).highlightColor,
+            ),
+          ),
+          onTap: () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return SavedPosts();
+                },
+              ),
+            );
+          },
+        ),
       ],
     );
   }
 
   Widget _buildBottomBar() {
-    print(DatabaseCtrl().ifUserLoggedIn());
+    print(
+      DatabaseCtrl().ifUserLoggedIn(),
+    );
     return BottomAppBar(
       color: Colors.transparent,
       elevation: 0.0,
@@ -471,7 +483,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         side: BorderSide(
                           color: Color.fromRGBO(168, 179, 207, 0.2),
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
                       ),
                       elevation: 5,
                       child: ProfileCard(

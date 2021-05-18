@@ -5,31 +5,33 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 buildCircularPercent(context) {
   return GetX<DatabaseCtrl>(
-      init: DatabaseCtrl(),
-      builder: (controller) {
-        double persent = double.parse(
-            (controller.userDataModel.value.rightSwiped /
-                    (controller.userDataModel.value.rightSwiped +
-                        controller.userDataModel.value.leftSwipled))
-                .toStringAsFixed(1));
+    init: DatabaseCtrl(),
+    builder: (controller) {
+      double persent = double.parse(
+        (controller.userDataModel.value.rightSwiped /
+                (controller.userDataModel.value.rightSwiped +
+                    controller.userDataModel.value.leftSwipled))
+            .toStringAsFixed(1),
+      );
 
-        return CircularPercentIndicator(
-          radius: MediaQuery.of(context).size.height * 0.1,
-          lineWidth: 5.0,
-          animation: true,
-          percent: 1 - persent,
-          center: new Text(
-            ((1 - persent) * 100).toString().substring(0, 2),
-            style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-          ),
-          footer: new Text(
-            'Total Right Swiped',
-            style: new TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height * 0.02),
-          ),
-          circularStrokeCap: CircularStrokeCap.round,
-          progressColor: Colors.green,
-        );
-      });
+      return CircularPercentIndicator(
+        radius: MediaQuery.of(context).size.height * 0.1,
+        lineWidth: 5.0,
+        animation: true,
+        percent: 1 - persent,
+        center: new Text(
+          ((1 - persent) * 100).toString().substring(0, 2),
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+        ),
+        footer: new Text(
+          'Total Right Swiped',
+          style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: MediaQuery.of(context).size.height * 0.02),
+        ),
+        circularStrokeCap: CircularStrokeCap.round,
+        progressColor: Colors.green,
+      );
+    },
+  );
 }

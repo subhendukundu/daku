@@ -1,10 +1,12 @@
-import 'package:daku/WebView.dart';
+import 'package:daku/SavedPosts/WebView.dart';
 import 'package:daku/models/post.dart';
-import 'package:daku/widgets/CircularPercent.dart';
-import 'package:daku/widgets/TransitionAnimation.dart';
+import 'package:daku/widgets/circularPercent.dart';
+import 'package:daku/widgets/transitionAnimation.dart';
 import 'package:daku/widgets/custom_youtube_device_player.dart';
 import 'package:daku/widgets/photos.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 // ignore: must_be_immutable
@@ -159,8 +161,9 @@ class _TransPageViewState extends State<TransPageView> {
             children: [
               _buildMedia(),
               Container(
-                  height: MediaQuery.of(context).size.height * 0.33,
-                  child: _buildBackground()),
+                height: MediaQuery.of(context).size.height * 0.33,
+                child: _buildBackground(),
+              ),
             ],
           ),
           Positioned(
@@ -216,24 +219,32 @@ class _TransPageViewState extends State<TransPageView> {
                   // splashColor: Theme.of(context).primaryColor,
                   hoverColor: Theme.of(context).primaryColor,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        SizeTransition1(WebViewPage(
-                          title: widget.post.name,
-                          url: widget.post.slug,
-                        )));
+                    kIsWeb
+                        ? launchURL(widget.post.slug)
+                        : Navigator.push(
+                            context,
+                            SizeTransition1(
+                              WebViewPage(
+                                title: widget.post.name,
+                                url: widget.post.slug,
+                              ),
+                            ),
+                          );
                   },
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                   child: Container(
                     child: Center(
-                        child: Text(
-                      'View On Producthunt',
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.018),
-                    )),
+                      child: Text(
+                        'View On Producthunt',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.018),
+                      ),
+                    ),
                     width: MediaQuery.of(context).size.width * 0.6,
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
@@ -244,6 +255,11 @@ class _TransPageViewState extends State<TransPageView> {
         ],
       ),
     );
+  }
+
+  void launchURL(slug) async {
+    final url = 'https://www.producthunt.com/posts/$slug';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
   _buildMedia() {
@@ -286,64 +302,66 @@ class _TransPageViewState extends State<TransPageView> {
           left: 20,
           top: MediaQuery.of(context).size.height * 0.15,
           child: InkWell(
-              onTap: () {
-                setState(() {
-                  if (visiblePhotoIndex != 0) visiblePhotoIndex -= 1;
-                });
-              },
-              child: Container(
-                child: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: Theme.of(context).highlightColor,
-                  size: 20,
+            onTap: () {
+              setState(() {
+                if (visiblePhotoIndex != 0) visiblePhotoIndex -= 1;
+              });
+            },
+            child: Container(
+              child: Icon(
+                Icons.arrow_back_ios_rounded,
+                color: Theme.of(context).highlightColor,
+                size: 20,
+              ),
+              height: MediaQuery.of(context).size.height * 0.05,
+              width: MediaQuery.of(context).size.height * 0.05,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
+                  colors: <Color>[
+                    Colors.white.withAlpha(0),
+                    Colors.white12,
+                    Colors.white70
+                  ],
                 ),
-                height: MediaQuery.of(context).size.height * 0.05,
-                width: MediaQuery.of(context).size.height * 0.05,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                    colors: <Color>[
-                      Colors.white.withAlpha(0),
-                      Colors.white12,
-                      Colors.white70
-                    ],
-                  ),
-                ),
-              )),
+              ),
+            ),
+          ),
         ),
         Positioned(
           right: 20,
           top: MediaQuery.of(context).size.height * 0.15,
           child: InkWell(
-              onTap: () {
-                setState(() {
-                  if (visiblePhotoIndex != widget.post.media.length - 1)
-                    visiblePhotoIndex += 1;
-                });
-              },
-              child: Container(
-                child: Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 20,
-                  color: Theme.of(context).highlightColor,
+            onTap: () {
+              setState(() {
+                if (visiblePhotoIndex != widget.post.media.length - 1)
+                  visiblePhotoIndex += 1;
+              });
+            },
+            child: Container(
+              child: Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 20,
+                color: Theme.of(context).highlightColor,
+              ),
+              height: MediaQuery.of(context).size.height * 0.05,
+              width: MediaQuery.of(context).size.height * 0.05,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
+                  colors: <Color>[
+                    Colors.white.withAlpha(0),
+                    Colors.white12,
+                    Colors.white70
+                  ],
                 ),
-                height: MediaQuery.of(context).size.height * 0.05,
-                width: MediaQuery.of(context).size.height * 0.05,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                    colors: <Color>[
-                      Colors.white.withAlpha(0),
-                      Colors.white12,
-                      Colors.white70
-                    ],
-                  ),
-                ),
-              )),
+              ),
+            ),
+          ),
         )
       ],
     );

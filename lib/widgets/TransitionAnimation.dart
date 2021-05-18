@@ -10,9 +10,10 @@ class SizeTransition1 extends PageRouteBuilder {
           reverseTransitionDuration: Duration(milliseconds: 400),
           transitionsBuilder: (context, animation, anotherAnimation, child) {
             animation = CurvedAnimation(
-                curve: Curves.fastOutSlowIn,
-                parent: animation,
-                reverseCurve: Curves.fastOutSlowIn);
+              curve: Curves.fastOutSlowIn,
+              parent: animation,
+              reverseCurve: Curves.fastOutSlowIn,
+            );
             return Align(
               alignment: Alignment.bottomCenter,
               child: SizeTransition(
