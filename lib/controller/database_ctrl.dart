@@ -35,7 +35,9 @@ class DatabaseCtrl extends GetxController {
 
   Future<void> authenticationWithGoogle() async {
     FirebaseAuth _auth = FirebaseAuth.instance;
-    GoogleSignIn _googleSignIn = GoogleSignIn();
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: ['email'],
+    );
 
     final GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
     final GoogleSignInAuthentication _googleAuth =
