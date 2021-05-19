@@ -265,11 +265,14 @@ class _MyHomePageState extends State<MyHomePage> {
               builder: (controller) {
                 return Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
                         backgroundImage: NetworkImage(
                             controller.userDataModel.value.imageUrl),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.01,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.25,
@@ -278,11 +281,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.017),
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.017,
+                          ),
                         ),
                       ),
-                      // subtitle: Text(user.email),
                     ],
                   ),
                 );

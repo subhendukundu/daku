@@ -215,7 +215,7 @@ class _ProfileCardState extends State<ProfileCard> {
                       width: kIsWeb
                           ? MediaQuery.of(context).size.width * 0.2
                           : widget.forSavedCard
-                              ? MediaQuery.of(context).size.width * 0.25
+                              ? MediaQuery.of(context).size.width * 0.2
                               : MediaQuery.of(context).size.width * 0.5,
                       child: new Text(
                         widget.post.node.name,
@@ -232,8 +232,9 @@ class _ProfileCardState extends State<ProfileCard> {
                         child: new Text(
                           'Upvotes: ' + widget.post.node.votesCount.toString(),
                           style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.015,
+                            fontSize: widget.forSavedCard
+                                ? MediaQuery.of(context).size.height * 0.01
+                                : MediaQuery.of(context).size.height * 0.015,
                           ),
                         ),
                       ),
@@ -248,7 +249,7 @@ class _ProfileCardState extends State<ProfileCard> {
                   style: Theme.of(context).textTheme.subtitle1.copyWith(
                         fontSize: getDescriptionSize(),
                       ),
-                  maxLines: getMaxLines(),
+                  maxLines: widget.forSavedCard ? 1 : getMaxLines(),
                   overflow: TextOverflow.ellipsis,
                 )
               ],

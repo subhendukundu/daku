@@ -167,32 +167,30 @@ class _TransPageViewState extends State<TransPageView> {
             ],
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.36,
-            left: MediaQuery.of(context).size.height * 0.01,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Text(
-                widget.post.name,
-                style: TextStyle(
-                    color: Theme.of(context).highlightColor,
-                    fontSize: MediaQuery.of(context).size.height * 0.03,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.43,
+            top: MediaQuery.of(context).size.height * 0.5,
             left: MediaQuery.of(context).size.height * 0.01,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  widget.post.name,
+                  style: TextStyle(
+                    color: Theme.of(context).highlightColor,
+                    fontSize: MediaQuery.of(context).size.height * 0.03,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                ),
+                Text(
                   'Description',
                   style: TextStyle(
-                      color: Theme.of(context).highlightColor,
-                      fontSize: MediaQuery.of(context).size.height * 0.022,
-                      fontWeight: FontWeight.bold),
+                    color: Theme.of(context).highlightColor,
+                    fontSize: MediaQuery.of(context).size.height * 0.022,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 30),
@@ -214,6 +212,9 @@ class _TransPageViewState extends State<TransPageView> {
             child: Column(
               children: [
                 buildCircularPercent(context),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
                 RawMaterialButton(
                   fillColor: Theme.of(context).highlightColor,
                   // splashColor: Theme.of(context).primaryColor,
@@ -277,7 +278,7 @@ class _TransPageViewState extends State<TransPageView> {
           children: <Widget>[
             isVideoAvailable
                 ? Container(
-                    height: height * 0.33,
+                    height: height * 0.45,
                     width: double.infinity,
                     child: Hero(
                       tag: widget.post.id,
@@ -287,7 +288,7 @@ class _TransPageViewState extends State<TransPageView> {
                     ),
                   )
                 : Container(
-                    height: height * 0.33,
+                    height: height * 0.45,
                     child: Hero(
                       tag: widget.post.id,
                       child: customImage(
@@ -300,7 +301,7 @@ class _TransPageViewState extends State<TransPageView> {
         ),
         Positioned(
           left: 20,
-          top: MediaQuery.of(context).size.height * 0.15,
+          top: MediaQuery.of(context).size.height * 0.22,
           child: InkWell(
             onTap: () {
               setState(() {
@@ -332,7 +333,7 @@ class _TransPageViewState extends State<TransPageView> {
         ),
         Positioned(
           right: 20,
-          top: MediaQuery.of(context).size.height * 0.15,
+          top: MediaQuery.of(context).size.height * 0.22,
           child: InkWell(
             onTap: () {
               setState(() {
@@ -367,5 +368,3 @@ class _TransPageViewState extends State<TransPageView> {
     );
   }
 }
-
-enum Direction { vertical, horizontal }

@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:daku/saved_posts/detailed_page.dart';
 import 'package:flutter/material.dart';
+
+enum Direction { vertical, horizontal }
 
 class SlideFadeTransition extends StatefulWidget {
   final Widget child;
