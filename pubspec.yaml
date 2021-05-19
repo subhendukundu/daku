@@ -24,7 +24,24 @@ dependencies:
   cached_network_image:
   rive_splash_screen: ^0.0.1
   flutter_icons: ^1.1.0
+  sqflite: ^2.0.0+3
+  get: ^4.1.2
+  get_storage: ^2.0.2
+  fluttertoast: ^8.0.6
+  webview_flutter: ^2.0.4
+  device_preview: ^0.7.1
+  font_awesome_flutter: ^9.0.0
+  percent_indicator: ^3.0.1
+  sign_button: ^2.0.0
+  firebase_auth: ^1.1.4
+  google_sign_in: ^5.0.3
+  cloud_firestore: ^2.1.0
+  firebase_core: ^1.1.1
+  flutter_phoenix: ^1.0.0
+  firebase_auth_web: ^1.1.2
 
+
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

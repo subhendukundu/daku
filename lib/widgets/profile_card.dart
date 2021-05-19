@@ -6,11 +6,14 @@ import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 import 'custom_youtube_device_player.dart';
 import 'photos.dart';
 
+// ignore: must_be_immutable
 class ProfileCard extends StatefulWidget {
   final Post post;
+  bool forSavedCard;
 
   ProfileCard({
     Key key,
+    this.forSavedCard,
     this.post,
   }) : super(key: key);
 
@@ -65,14 +68,12 @@ class _ProfileCardState extends State<ProfileCard> {
     if (width > 500) {
       return 16;
     } else {
-      print(width * 0.03);
       return width * 0.03;
     }
   }
 
   int getMaxLines() {
     double height = MediaQuery.of(context).size?.height;
-    print(height);
     return height > 700 ? 6 : 3;
   }
 
@@ -171,7 +172,6 @@ class _ProfileCardState extends State<ProfileCard> {
         ? YoutubePlayerController.convertUrlToId(currentMedia.videoUrl)
         : '';
     double height = MediaQuery.of(context).size?.height;
-    print(currentMedia.url);
     return new Positioned(
       left: 0.0,
       right: 0.0,
@@ -208,11 +208,37 @@ class _ProfileCardState extends State<ProfileCard> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                new Text(
-                  widget.post.node.name,
-                  style: Theme.of(context).textTheme.headline1.copyWith(
-                        fontSize: getTitleSize(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: kIsWeb
+                          ? MediaQuery.of(context).size.width * 0.2
+                          : widget.forSavedCard
+                              ? MediaQuery.of(context).size.width * 0.25
+                              : MediaQuery.of(context).size.width * 0.5,
+                      child: new Text(
+                        widget.post.node.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.headline1.copyWith(
+                              fontSize: getTitleSize(),
+                            ),
                       ),
+                    ),
+                    Container(
+                      color: Color.fromRGBO(204, 77, 41, 1),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: new Text(
+                          'Upvotes: ' + widget.post.node.votesCount.toString(),
+                          style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.015,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 10,

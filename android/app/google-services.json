@@ -1,0 +1,155 @@
+{
+  "project_info": {
+    "project_number": "14827065391",
+    "firebase_url": "https://daku-e08e5.firebaseio.com",
+    "project_id": "daku-e08e5",
+    "storage_bucket": "daku-e08e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14827065391:android:c43a2f5bb4e8013d28b6da",
+        "android_client_info": {
+          "package_name": "com.example.mememo_sound"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14827065391-ulpbp32h81h1ffjgor7f9c13kcurj7cj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mememo_sound",
+            "certificate_hash": "7694d48223513d692db8c0f4ce3a9c55d9500896"
+          }
+        },
+        {
+          "client_id": "14827065391-nan2dr0aqc94u8567e6qs7p541cvmn1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7p87MI38cgycUOegXi84hsNBSHj40cJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14827065391-nan2dr0aqc94u8567e6qs7p541cvmn1d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14827065391:android:0b12d26db141b5a528b6da",
+        "android_client_info": {
+          "package_name": "io.higgle.daku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14827065391-13vovf0friur313qnsop5cn3hds4iukm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.higgle.daku",
+            "certificate_hash": "1022139985edf3b54fa0ef3b585e70f5f915787d"
+          }
+        },
+        {
+          "client_id": "14827065391-5jj5h4te4ovu3etvfoj2mrq2m0fn3d13.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.higgle.daku",
+            "certificate_hash": "c0519e6a16b3c3af65d5d9420ba10c7f0b4ed7ef"
+          }
+        },
+        {
+          "client_id": "14827065391-ducovah920hn5gkva4vn438ut0mbgr9h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.higgle.daku",
+            "certificate_hash": "da56fb3800a4c8e0e8e04ec09d97f2c2b1b781a7"
+          }
+        },
+        {
+          "client_id": "14827065391-mck25qfggp1jik54qms9b6hukq05qeju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.higgle.daku",
+            "certificate_hash": "7694d48223513d692db8c0f4ce3a9c55d9500896"
+          }
+        },
+        {
+          "client_id": "14827065391-q3ka7psd6mgjvammeqdo8pc35qegn7i2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.higgle.daku",
+            "certificate_hash": "fbc261dd88692b2d8aa130671f847c3f241d1a9d"
+          }
+        },
+        {
+          "client_id": "14827065391-nan2dr0aqc94u8567e6qs7p541cvmn1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7p87MI38cgycUOegXi84hsNBSHj40cJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14827065391-nan2dr0aqc94u8567e6qs7p541cvmn1d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-6509349626863263~3099695732"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14827065391:android:008ca9714316547128b6da",
+        "android_client_info": {
+          "package_name": "io.higgle.dakuapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14827065391-0rm39h0sg2jafhgljcnnnfg4lo5jjl69.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.higgle.dakuapp",
+            "certificate_hash": "fbc261dd88692b2d8aa130671f847c3f241d1a9d"
+          }
+        },
+        {
+          "client_id": "14827065391-nan2dr0aqc94u8567e6qs7p541cvmn1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7p87MI38cgycUOegXi84hsNBSHj40cJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14827065391-nan2dr0aqc94u8567e6qs7p541cvmn1d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

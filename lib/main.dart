@@ -1,14 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:daku/root_app.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
-
 import 'providers/theme_provider.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
+  GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
@@ -20,15 +26,15 @@ void main() async {
   final settings = await Hive.openBox('settings');
   bool isLightTheme = settings.get('isLightTheme') ?? false;
 
-  print(isLightTheme);
-
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(
-        isLightTheme: isLightTheme,
-        context: context,
+    Phoenix(
+      child: ChangeNotifierProvider(
+        create: (context) => ThemeProvider(
+          isLightTheme: isLightTheme,
+          context: context,
+        ),
+        child: AppStart(),
       ),
-      child: AppStart(),
     ),
   );
 }

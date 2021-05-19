@@ -17,21 +17,25 @@ class ThemeProvider with ChangeNotifier {
 
   getCurrentStatusNavigationBarColor() {
     if (isLightTheme) {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Color(0xFFFFFFFF),
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ));
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: Color(0xFFFFFFFF),
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ),
+      );
     } else {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.light,
-        systemNavigationBarColor: Color(0xFF26242e),
-        systemNavigationBarIconBrightness: Brightness.light,
-      ));
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          systemNavigationBarColor: Color(0xFF26242e),
+          systemNavigationBarIconBrightness: Brightness.light,
+        ),
+      );
     }
   }
 

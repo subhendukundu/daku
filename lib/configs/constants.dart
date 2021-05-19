@@ -22,8 +22,28 @@ const String readPosts = r'''
             videoUrl
             url
           }
+          votesCount
         }
       }
     }
+  }
+''';
+
+const String readPostById = r'''
+  query postById($id: ID) {
+      post(id: $id) {
+        id
+        name
+        description
+        slug
+        media {
+          videoUrl
+          url
+        }
+        votesCount
+        makers {
+          profileImage
+        }
+      }
   }
 ''';
