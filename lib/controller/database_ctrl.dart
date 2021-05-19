@@ -76,9 +76,10 @@ class DatabaseCtrl extends GetxController {
     // Create a new provider
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-    googleProvider
-        .addScope('https://www.googleapis.com/auth/contacts.readonly');
-    googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+    googleProvider.addScope('email');
+    googleProvider.setCustomParameters({
+      'login_hint': 'user@example.com',
+    });
 
     // Once signed in, return the UserCredential
     final UserCredential credential =
