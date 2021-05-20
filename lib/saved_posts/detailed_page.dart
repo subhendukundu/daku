@@ -148,6 +148,8 @@ class _TransPageViewState extends State<TransPageView> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    print(width);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -155,105 +157,117 @@ class _TransPageViewState extends State<TransPageView> {
         elevation: 0,
         iconTheme: IconThemeData(color: Theme.of(context).highlightColor),
       ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              _buildMedia(),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.33,
-                child: _buildBackground(),
-              ),
-            ],
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.5,
-            left: MediaQuery.of(context).size.height * 0.01,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        padding: width > 1200
+            ? EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.15)
+            : null,
+        child: Stack(
+          children: [
+            Column(
               children: [
-                Text(
-                  widget.post.name,
-                  style: TextStyle(
-                    color: Theme.of(context).highlightColor,
-                    fontSize: MediaQuery.of(context).size.height * 0.03,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                ),
-                Text(
-                  'Description',
-                  style: TextStyle(
-                    color: Theme.of(context).highlightColor,
-                    fontSize: MediaQuery.of(context).size.height * 0.022,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                _buildMedia(),
                 Container(
-                  padding: EdgeInsets.only(top: 30),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Text(
-                    widget.post.description,
+                  height: MediaQuery.of(context).size.height * 0.33,
+                  child: _buildBackground(),
+                ),
+              ],
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.5,
+              left: MediaQuery.of(context).size.height * 0.01,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.post.name,
                     style: TextStyle(
                       color: Theme.of(context).highlightColor,
-                      fontSize: MediaQuery.of(context).size.height * 0.016,
+                      fontSize: MediaQuery.of(context).size.height * 0.03,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.04,
-            left: MediaQuery.of(context).size.width * 0.2,
-            child: Column(
-              children: [
-                buildCircularPercent(context),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                RawMaterialButton(
-                  fillColor: Theme.of(context).highlightColor,
-                  // splashColor: Theme.of(context).primaryColor,
-                  hoverColor: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    kIsWeb
-                        ? launchURL(widget.post.slug)
-                        : Navigator.push(
-                            context,
-                            SizeTransition1(
-                              WebViewPage(
-                                title: widget.post.name,
-                                url: widget.post.slug,
-                              ),
-                            ),
-                          );
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Container(
-                    child: Center(
-                      child: Text(
-                        'View On Producthunt',
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.018),
-                      ),
-                    ),
-                    width: MediaQuery.of(context).size.width * 0.6,
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
-                ),
-              ],
+                  Text(
+                    'Description',
+                    style: TextStyle(
+                      color: Theme.of(context).highlightColor,
+                      fontSize: MediaQuery.of(context).size.height * 0.022,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 30),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Text(
+                      widget.post.description,
+                      style: TextStyle(
+                        color: Theme.of(context).highlightColor,
+                        fontSize: MediaQuery.of(context).size.height * 0.016,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.04,
+              left: width > 1200
+                  ? MediaQuery.of(context).size.width * 0.2
+                  : MediaQuery.of(context).size.width * 0.39,
+              child: Container(
+                child: Column(
+                  children: [
+                    buildCircularPercent(context),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    RawMaterialButton(
+                      fillColor: Theme.of(context).highlightColor,
+                      // splashColor: Theme.of(context).primaryColor,
+                      hoverColor: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        kIsWeb
+                            ? launchURL(widget.post.slug)
+                            : Navigator.push(
+                                context,
+                                SizeTransition1(
+                                  WebViewPage(
+                                    title: widget.post.name,
+                                    url: widget.post.slug,
+                                  ),
+                                ),
+                              );
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Container(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.3),
+                        child: Center(
+                          child: Text(
+                            'View On Producthunt',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.018),
+                          ),
+                        ),
+                        // width: MediaQuery.of(context).size.width * 0.6,
+                        height: MediaQuery.of(context).size.height * 0.05,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
