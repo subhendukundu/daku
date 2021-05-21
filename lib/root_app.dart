@@ -54,6 +54,9 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Get.put(DatabaseCtrl());
+    if (GetStorage().read('InfoDialog') == null) {
+      GetStorage().write('InfoDialog', true);
+    }
   }
 
   @override
@@ -348,27 +351,28 @@ class _MyHomePageState extends State<MyHomePage> {
             launchGithubURL();
           },
         ),
-        InkWell(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-            ),
-            child: Icon(
-              Icons.favorite,
-              color: Theme.of(context).highlightColor,
-            ),
-          ),
-          onTap: () async {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return SavedPosts();
-                },
+        if (DatabaseCtrl().ifUserLoggedIn())
+          InkWell(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
               ),
-            );
-          },
-        ),
+              child: Icon(
+                Icons.favorite,
+                color: Theme.of(context).highlightColor,
+              ),
+            ),
+            onTap: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SavedPosts();
+                  },
+                ),
+              );
+            },
+          ),
       ],
     );
   }
@@ -455,7 +459,7 @@ class _MyHomePageState extends State<MyHomePage> {
               controller: _controller,
               onSwipeCompleted: (index, direction) {
                 if (direction == SwipeDirection.right) {
-                  controller.insert(posts[index].node);
+                  controller.insert(posts[index].node, context);
                 } else {
                   controller.leftSwipeIncreement(posts[index].node);
                 }
@@ -532,7 +536,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   loginDialog() {
-    // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -591,14 +594,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             (value) {
                               Get.reset();
                               Phoenix.rebirth(context);
-                              analyicsDialog();
                             },
                           )
                         : DatabaseCtrl().authenticationWithGoogle().then(
                             (value) {
                               Get.reset();
                               Phoenix.rebirth(context);
-                              analyicsDialog();
                             },
                           );
                   },

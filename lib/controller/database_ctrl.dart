@@ -1,9 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daku/models/user_model.dart';
+import 'package:daku/saved_posts/web_view.dart';
 import 'package:daku/widgets/flutter_toast.dart';
+import 'package:daku/widgets/info_dialog.dart';
+import 'package:daku/widgets/transition_animation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Node;
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hive/hive.dart';
 import '../models/post.dart';
 
 class DatabaseCtrl extends GetxController {
@@ -107,19 +114,43 @@ class DatabaseCtrl extends GetxController {
     });
   }
 
-  void insert(Node info) async {
+  void insert(Node post, BuildContext context) async {
     if (ifUserLoggedIn()) {
       FirebaseFirestore.instance
           .collection('UserData')
           .doc(userUid())
           .collection('SavedPost')
-          .doc(info.id)
-          .set(info.toJson());
+          .doc(post.id)
+          .set(post.toJson());
       rightSwipeIncreement();
 
       toast(msg: "Post is Added to Favourite");
     } else {
-      toast(msg: "Please Login");
+      // for Web
+      if (kIsWeb) {
+        final settings = await Hive.openBox('showinfoDialog');
+        if (settings.get('infoDialog')) {
+          showInfoDialog(context, post);
+        } else {
+          launchURL(post.slug);
+        }
+      }
+      // for mobile
+      else {
+        if (GetStorage().read('InfoDialog')) {
+          showInfoDialog(context, post);
+        } else {
+          Navigator.push(
+            context,
+            SizeTransition1(
+              WebViewPage(
+                title: post.name,
+                url: post.slug,
+              ),
+            ),
+          );
+        }
+      }
     }
   }
 
@@ -161,11 +192,13 @@ class DatabaseCtrl extends GetxController {
   }
 
   void leftSwipeIncreement(info) async {
-    int leftSwiped = userDataModel.value.leftSwipled;
-    await FirebaseFirestore.instance
-        .collection('UserData')
-        .doc(userUid())
-        .update({'LeftSwiped': leftSwiped + 1});
+    if (ifUserLoggedIn()) {
+      int leftSwiped = userDataModel.value.leftSwipled;
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(userUid())
+          .update({'LeftSwiped': leftSwiped + 1});
+    }
   }
 
   logOut() {

@@ -24,7 +24,9 @@ void main() async {
   }
 
   final settings = await Hive.openBox('settings');
+  final infoDialog = await Hive.openBox('showinfoDialog');
   bool isLightTheme = settings.get('isLightTheme') ?? false;
+  infoDialog.get('infoDialog') ?? infoDialog.put('infoDialog', true);
 
   runApp(
     Phoenix(

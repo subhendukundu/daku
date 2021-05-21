@@ -6,6 +6,7 @@ import 'package:daku/widgets/custom_youtube_device_player.dart';
 import 'package:daku/widgets/photos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
@@ -182,11 +183,14 @@ class _TransPageViewState extends State<TransPageView> {
                 children: [
                   Text(
                     widget.post.name,
-                    style: TextStyle(
-                      color: Theme.of(context).highlightColor,
-                      fontSize: MediaQuery.of(context).size.height * 0.03,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.headline1.copyWith(
+                          fontSize: getTitleSize(),
+                        ),
+                    // style: TextStyle(
+                    //   color: Theme.of(context).highlightColor,
+                    //   fontSize: MediaQuery.of(context).size.height * 0.03,
+                    //   fontWeight: FontWeight.bold,
+                    // ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
@@ -216,8 +220,8 @@ class _TransPageViewState extends State<TransPageView> {
             Positioned(
               bottom: MediaQuery.of(context).size.height * 0.04,
               left: width > 1200
-                  ? MediaQuery.of(context).size.width * 0.2
-                  : MediaQuery.of(context).size.width * 0.39,
+                  ? MediaQuery.of(context).size.width * 0.145
+                  : MediaQuery.of(context).size.width * 0.28,
               child: Container(
                 child: Column(
                   children: [
@@ -247,7 +251,7 @@ class _TransPageViewState extends State<TransPageView> {
                       ),
                       child: Container(
                         constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width * 0.3),
+                            maxWidth: MediaQuery.of(context).size.width * 0.45),
                         child: Center(
                           child: Text(
                             'View On Producthunt',

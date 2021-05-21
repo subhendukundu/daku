@@ -334,9 +334,11 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Post postData = Post();
     postData.node = post;
-
     final Size size = Size(MediaQuery.of(context).size.width * 0.7,
         MediaQuery.of(context).size.height * 0.65);
+
+    final Size sizeforWeb = Size(MediaQuery.of(context).size.width * 0.45,
+        MediaQuery.of(context).size.height * 0.8);
 
     return Transform.translate(
       offset: Offset(30 + offset, sizeOffset / 12),
@@ -345,16 +347,13 @@ class EventCard extends StatelessWidget {
         child: Opacity(
           opacity: opacity,
           child: SizedBox(
-            width: size.width - sizeOffset,
-            height: size.height - sizeOffset,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Card(
-                color: Theme.of(context).primaryColor,
-                child: ProfileCard(
-                  post: postData,
-                  forSavedCard: true,
-                ),
+            width: kIsWeb ? sizeforWeb.width : size.width - sizeOffset,
+            height: kIsWeb ? sizeforWeb.height : size.height - sizeOffset,
+            child: Card(
+              color: Theme.of(context).primaryColor,
+              child: ProfileCard(
+                post: postData,
+                forSavedCard: true,
               ),
             ),
           ),
