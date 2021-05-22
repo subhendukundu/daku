@@ -271,8 +271,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            controller.userDataModel.value.imageUrl),
+                        backgroundImage: NetworkImage(controller
+                                .userDataModel.value.imageUrl ??
+                            'https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png'),
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.01,
@@ -351,18 +352,18 @@ class _MyHomePageState extends State<MyHomePage> {
             launchGithubURL();
           },
         ),
-        if (DatabaseCtrl().ifUserLoggedIn())
-          InkWell(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              child: Icon(
-                Icons.favorite,
-                color: Theme.of(context).highlightColor,
-              ),
+        InkWell(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
             ),
-            onTap: () async {
+            child: Icon(
+              Icons.favorite,
+              color: Theme.of(context).highlightColor,
+            ),
+          ),
+          onTap: () async {
+            if (DatabaseCtrl().ifUserLoggedIn()) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -371,8 +372,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               );
-            },
-          ),
+            } else {
+              loginDialog('Sign in to view your saved products');
+            }
+          },
+        ),
       ],
     );
   }
@@ -396,9 +400,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [],
-                ),
                 new Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -423,7 +424,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         : new RoundIconButton.large(
                             icon: Icons.analytics_outlined,
                             iconColor: Theme.of(context).highlightColor,
-                            onPressed: loginDialog,
+                            onPressed: () =>
+                                loginDialog('1000+ users have joined so far'),
                           ),
                     SizedBox(
                       width: 50,
@@ -535,7 +537,7 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  loginDialog() {
+  loginDialog(String description) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -578,7 +580,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ]),
                 Text(
-                  '1000+ users have joined so far',
+                  description,
                   style: TextStyle(
                       color: Theme.of(context).highlightColor,
                       fontSize: MediaQuery.of(context).size.height * 0.02),

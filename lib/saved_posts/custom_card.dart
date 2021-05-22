@@ -196,7 +196,7 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
           var progress = _calculateProgress(model.offset);
           if (direction == Direction.BACK) {
             progress = 100 - progress;
-            model.rotation += details.delta.dx * 0.0005;
+            model.rotation += details.delta.dx * -0.0001;
           }
           if (direction == Direction.AWAY) {
             model.rotation -= details.delta.dx * 0.0005;
@@ -219,6 +219,7 @@ class _CardsState extends State<Cards> with TickerProviderStateMixin {
   }
 
   _onDragEnd(DragEndDetails details) {
+    // print(details);
     offsetTweens.clear();
     sizeOffsetTweens.clear();
     opacityTweens.clear();
@@ -337,8 +338,10 @@ class EventCard extends StatelessWidget {
     final Size size = Size(MediaQuery.of(context).size.width * 0.7,
         MediaQuery.of(context).size.height * 0.65);
 
-    final Size sizeforWeb = Size(MediaQuery.of(context).size.width * 0.45,
-        MediaQuery.of(context).size.height * 0.8);
+    final widthSize = MediaQuery.of(context).size.width * 0.4;
+
+    final Size sizeforWeb = Size(widthSize < 500 ? 500 : widthSize,
+        MediaQuery.of(context).size.height * 0.65);
 
     return Transform.translate(
       offset: Offset(30 + offset, sizeOffset / 12),
