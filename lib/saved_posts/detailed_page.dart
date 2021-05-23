@@ -164,7 +164,7 @@ class _TransPageViewState extends State<TransPageView> {
             children: [
               _buildMedia(),
               Container(
-                height: MediaQuery.of(context).size.height * 0.33,
+                height: MediaQuery.of(context).size.height * 0.1,
                 child: _buildBackground(),
               ),
               Column(
@@ -295,7 +295,7 @@ class _TransPageViewState extends State<TransPageView> {
           children: <Widget>[
             isVideoAvailable
                 ? Container(
-                    height: height * 0.45,
+                    height: height * 0.6,
                     width: double.infinity,
                     child: Hero(
                       tag: widget.post.id,
@@ -305,7 +305,7 @@ class _TransPageViewState extends State<TransPageView> {
                     ),
                   )
                 : Container(
-                    height: height * 0.45,
+                    height: height * 0.6,
                     child: Hero(
                       tag: widget.post.id,
                       child: customImage(
@@ -318,7 +318,7 @@ class _TransPageViewState extends State<TransPageView> {
         ),
         Positioned(
           left: 20,
-          top: MediaQuery.of(context).size.height * 0.22,
+          top: MediaQuery.of(context).size.height * 0.3,
           child: InkWell(
             onTap: () {
               setState(() {
@@ -350,7 +350,7 @@ class _TransPageViewState extends State<TransPageView> {
         ),
         Positioned(
           right: 20,
-          top: MediaQuery.of(context).size.height * 0.22,
+          top: MediaQuery.of(context).size.height * 0.3,
           child: InkWell(
             onTap: () {
               setState(() {

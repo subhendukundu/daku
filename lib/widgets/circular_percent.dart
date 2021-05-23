@@ -14,7 +14,7 @@ buildCircularPercent(context) {
             .toStringAsFixed(1),
       );
       if (persent == null) {
-        persent = 1;
+        persent = 1.0;
       }
 
       return CircularPercentIndicator(
