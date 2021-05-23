@@ -26,11 +26,16 @@ buildCircularPercent(context) {
           ((persent) * 100).toString().substring(0, 2),
           style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
         ),
-        footer: new Text(
-          'Total Right Swiped',
-          style: new TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.of(context).size.height * 0.02),
+        footer: Padding(
+          padding: const EdgeInsets.only(
+            top: 10.0,
+          ),
+          child: new Text(
+            'Total Right Swiped',
+            style: new TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.height * 0.02),
+          ),
         ),
         circularStrokeCap: CircularStrokeCap.round,
         progressColor: Colors.green,

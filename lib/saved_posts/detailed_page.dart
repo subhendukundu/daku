@@ -158,26 +158,16 @@ class _TransPageViewState extends State<TransPageView> {
         elevation: 0,
         iconTheme: IconThemeData(color: Theme.of(context).highlightColor),
       ),
-      body: Container(
-        padding: width > 1200
-            ? EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.15)
-            : null,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                _buildMedia(),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.33,
-                  child: _buildBackground(),
-                ),
-              ],
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.5,
-              left: MediaQuery.of(context).size.height * 0.01,
-              child: Column(
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              _buildMedia(),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.33,
+                child: _buildBackground(),
+              ),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -186,14 +176,9 @@ class _TransPageViewState extends State<TransPageView> {
                     style: Theme.of(context).textTheme.headline1.copyWith(
                           fontSize: getTitleSize(),
                         ),
-                    // style: TextStyle(
-                    //   color: Theme.of(context).highlightColor,
-                    //   fontSize: MediaQuery.of(context).size.height * 0.03,
-                    //   fontWeight: FontWeight.bold,
-                    // ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: 40,
                   ),
                   Text(
                     'Description',
@@ -216,23 +201,20 @@ class _TransPageViewState extends State<TransPageView> {
                   ),
                 ],
               ),
-            ),
-            Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.04,
-              left: width > 1200
-                  ? MediaQuery.of(context).size.width * 0.145
-                  : MediaQuery.of(context).size.width * 0.28,
-              child: Container(
+              SizedBox(
+                height: 40,
+              ),
+              Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     buildCircularPercent(context),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    RawMaterialButton(
-                      fillColor: Theme.of(context).highlightColor,
-                      // splashColor: Theme.of(context).primaryColor,
-                      hoverColor: Theme.of(context).primaryColor,
+                    MaterialButton(
+                      color: Color.fromRGBO(204, 77, 41, 1),
+                      shape: StadiumBorder(),
                       onPressed: () {
                         kIsWeb
                             ? launchURL(widget.post.slug)
@@ -246,31 +228,47 @@ class _TransPageViewState extends State<TransPageView> {
                                 ),
                               );
                       },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                      elevation: 5.0,
                       child: Container(
-                        constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width * 0.45),
-                        child: Center(
-                          child: Text(
-                            'View On Producthunt',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.018),
-                          ),
+                        width: 300,
+                        height: 40,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: 30,
+                              width: 30,
+                              padding: EdgeInsets.only(
+                                right: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/product-hunt-logo-orange-240.png'),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Open on ProductHunt',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).highlightColor,
+                              ),
+                            ),
+                          ],
                         ),
-                        // width: MediaQuery.of(context).size.width * 0.6,
-                        height: MediaQuery.of(context).size.height * 0.05,
                       ),
                     ),
                   ],
                 ),
               ),
-            )
-          ],
+              SizedBox(
+                height: 60,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -288,6 +286,7 @@ class _TransPageViewState extends State<TransPageView> {
         ? YoutubePlayerController.convertUrlToId(currentMedia.videoUrl)
         : '';
     double height = MediaQuery.of(context).size?.height;
+    double width = MediaQuery.of(context).size?.width;
     return Stack(
       children: [
         new Column(
@@ -310,7 +309,7 @@ class _TransPageViewState extends State<TransPageView> {
                     child: Hero(
                       tag: widget.post.id,
                       child: customImage(
-                        "${currentMedia.url}&auto=compress&codec=mozjpeg&cs=strip&w=450&h=382&fit=max",
+                        "${currentMedia.url}&auto=compress&codec=mozjpeg&cs=strip&w=$width&fit=max",
                         double.infinity,
                       ),
                     ),
