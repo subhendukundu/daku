@@ -213,7 +213,9 @@ class _ProfileCardState extends State<ProfileCard> {
                   children: [
                     Container(
                       width: kIsWeb
-                          ? MediaQuery.of(context).size.width * 0.2
+                          ? MediaQuery.of(context).size.width < 500
+                              ? MediaQuery.of(context).size.width * 0.2
+                              : 200
                           : widget.forSavedCard
                               ? MediaQuery.of(context).size.width * 0.2
                               : MediaQuery.of(context).size.width * 0.5,

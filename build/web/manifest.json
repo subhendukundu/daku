@@ -1,0 +1,22 @@
+{
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "name": "Daku - A Tinder for Products",
+    "short_name": "Daku",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "daku.app is a website to find new products.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "chrome_url_overrides": {
+		"newtab": "index.html"
+	},
+	"content_security_policy": "default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+	"web_accessible_resources": [
+		"index.html",
+		"/assets/*",
+        "/icons/*"
+	]
+}
