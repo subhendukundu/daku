@@ -40762,7 +40762,7 @@ s=E.anq(j,C.S,0,new T.fm(K.as(b).dx,j,j),j,j)
 r=k.Yc()
 q=b.F(i).f
 p=k.a.c
-q=M.b_(j,new X.tu(p.e,k.d,k.gE4(),k.gDH(),j),C.j,j,j,j,j,q.a.b*0.33,j,j,j,j,j,j)
+q=M.b_(j,new X.tu(p.e,k.d,k.gE4(),k.gDH(),j),C.j,j,j,j,j,q.a.b*0.1,j,j,j,j,j,j)
 p=L.dh(p.b,j,j,K.as(b).aT.a.vz(k.xH()),j,j)
 o=T.dR(j,40,j)
 n=L.dh("Description",j,j,A.dS(j,j,K.as(b).dx,j,j,j,j,j,j,j,j,b.F(i).f.a.b*0.022,j,C.aA,j,j,!0,j,j,j,j,j,j,j),j,j)
@@ -40794,8 +40794,8 @@ s=k.c.F(h).f.a.b
 r=k.c.F(h).f
 q=k.a
 if(g){r=q.c.a
-r=M.b_(j,T.aok(k.EZ(f),r),C.j,j,j,j,j,s*0.45,j,j,j,j,j,1/0)}else{q=q.c.a
-q=M.b_(j,T.aok(k.a7m(H.c(i.a)+"&auto=compress&codec=mozjpeg&cs=strip&w="+H.c(r.a.a)+"&fit=max",1/0),q),C.j,j,j,j,j,s*0.45,j,j,j,j,j,j)
+r=M.b_(j,T.aok(k.EZ(f),r),C.j,j,j,j,j,s*0.6,j,j,j,j,j,1/0)}else{q=q.c.a
+q=M.b_(j,T.aok(k.a7m(H.c(i.a)+"&auto=compress&codec=mozjpeg&cs=strip&w="+H.c(r.a.a)+"&fit=max",1/0),q),C.j,j,j,j,j,s*0.6,j,j,j,j,j,j)
 r=q}q=t._
 r=T.i_(H.a([r],q),C.bT,C.cu,C.aa)
 p=k.c.F(h).f
@@ -40805,14 +40805,14 @@ o=L.mr(C.r7,K.as(o).dx,20)
 n=k.c.F(h).f
 m=k.c.F(h).f
 l=t.it
-p=T.pD(j,R.kz(!1,!0,M.b_(j,o,C.j,j,j,new S.d4(j,j,j,j,j,new T.jl(C.iS,C.dV,C.bf,H.a([P.aV(0,255,255,255),C.fX,C.B],l),j,j),C.at),j,n.a.b*0.05,j,j,j,j,j,m.a.b*0.05),j,!0,j,j,j,j,j,j,j,j,j,new R.ajd(k),j,j,j),j,j,20,j,p.a.b*0.22,j)
+p=T.pD(j,R.kz(!1,!0,M.b_(j,o,C.j,j,j,new S.d4(j,j,j,j,j,new T.jl(C.iS,C.dV,C.bf,H.a([P.aV(0,255,255,255),C.fX,C.B],l),j,j),C.at),j,n.a.b*0.05,j,j,j,j,j,m.a.b*0.05),j,!0,j,j,j,j,j,j,j,j,j,new R.ajd(k),j,j,j),j,j,20,j,p.a.b*0.3,j)
 m=k.c.F(h).f
 n=k.c
 n.toString
 n=L.mr(C.r8,K.as(n).dx,20)
 o=k.c.F(h).f
 h=k.c.F(h).f
-return T.fz(C.aQ,H.a([r,p,T.pD(j,R.kz(!1,!0,M.b_(j,n,C.j,j,j,new S.d4(j,j,j,j,j,new T.jl(C.iS,C.dV,C.bf,H.a([P.aV(0,255,255,255),C.fX,C.B],l),j,j),C.at),j,o.a.b*0.05,j,j,j,j,j,h.a.b*0.05),j,!0,j,j,j,j,j,j,j,j,j,new R.aje(k),j,j,j),j,j,j,20,m.a.b*0.22,j)],q),C.aO,C.al)}}
+return T.fz(C.aQ,H.a([r,p,T.pD(j,R.kz(!1,!0,M.b_(j,n,C.j,j,j,new S.d4(j,j,j,j,j,new T.jl(C.iS,C.dV,C.bf,H.a([P.aV(0,255,255,255),C.fX,C.B],l),j,j),C.at),j,o.a.b*0.05,j,j,j,j,j,h.a.b*0.05),j,!0,j,j,j,j,j,j,j,j,j,new R.aje(k),j,j,j),j,j,j,20,m.a.b*0.3,j)],q),C.aO,C.al)}}
 R.ajj.prototype={
 $0:function(){var s=this.a,r=s.d
 s.d=r>0?r-1:0},
